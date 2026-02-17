@@ -1,0 +1,22 @@
+{
+  "api": {
+    "bdlBase": "https://bdl.stat.gov.pl/api/v1",
+    "unitIdLong": "206201100000",
+    "unitIdShort": "2062011",
+    "variables": [
+      { "id": 72305, "name": "Ludność ogółem", "unit": "os." },
+      { "id": 74, "name": "Urodzenia żywe", "unit": "os." },
+      { "id": 75, "name": "Zgony ogółem", "unit": "os." },
+      { "id": 451, "name": "Stopa bezrobocia rej.", "unit": "%" },
+      { "id": 60323, "name": "Dzieci w wych. przedszk.", "unit": "os." },
+      { "id": 64619, "name": "Uczniowie szk. podst.", "unit": "os." }
+    ]
+  },
+  "sources": {
+    "gusBdl": "https://bdl.stat.gov.pl",
+    "bipLomza": "https://www.lomza.pl/bip/",
+    "mf": "https://www.gov.pl/web/finanse",
+    "regonApi": "https://api.stat.gov.pl/Home/RegonApi",
+    "nbp": "https://www.nbp.pl/"
+  }
+}

@@ -1,9 +1,20 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="pl">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Łomża — Miasto jako Firma | Dashboard Finansowy</title>
+<meta name="description" content="Dashboard finansowy miasta Łomża: budżet, demografia, rynek pracy, dług publiczny i dane live z BDL GUS.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Łomża — Miasto jako Firma | Dashboard Finansowy">
+<meta property="og:description" content="Interaktywny dashboard danych miejskich Łomży: budżet, dług, demografia i wskaźniki gospodarcze.">
+<meta property="og:url" content="https://lomza.pages.dev/">
+<meta property="og:image" content="https://lomza.pages.dev/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#080b12">
+<link rel="canonical" href="https://lomza.pages.dev/">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="manifest" href="manifest.webmanifest">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@300;400;600&family=Manrope:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
@@ -26,7 +37,7 @@
       <div class="api-dot" id="api-dot"></div>
       <span id="api-label" style="color:var(--text3)">BDL API...</span>
     </div>
-    <div class="data-year">Dane: 2024</div>
+    <div class="data-year">Dane: 2024 + szacunki 2025</div>
   </div>
 </header>
 
@@ -37,26 +48,26 @@
   <div class="ticker-label">▶ WSKAŹNIKI</div>
   <div class="ticker-track">
     <div class="ticker-inner" id="ticker">
-      <span class="t-item"><span class="t-k">DOCHODY</span><span class="t-v">542,3 mln zł</span><span class="t-c up">▲+12,6%</span></span>
-      <span class="t-item"><span class="t-k">WYDATKI</span><span class="t-v">567,5 mln zł</span><span class="t-c dn">▲+15,8%</span></span>
-      <span class="t-item"><span class="t-k">DŁUG</span><span class="t-v">~201 mln zł</span><span class="t-c dn">▲+17%</span></span>
-      <span class="t-item"><span class="t-k">LUDNOŚĆ</span><span class="t-v">59 476</span><span class="t-c dn">▼−1,1%</span></span>
+      <span class="t-item"><span class="t-k">DOCHODY</span><span class="t-v">639,6 mln zł</span><span class="t-c up">▲+17,9%</span></span>
+      <span class="t-item"><span class="t-k">WYDATKI</span><span class="t-v">651,1 mln zł</span><span class="t-c dn">▲+14,7%</span></span>
+      <span class="t-item"><span class="t-k">DŁUG</span><span class="t-v">213,6 mln zł</span><span class="t-c dn">33,4% doch.</span></span>
+      <span class="t-item"><span class="t-k">LUDNOŚĆ</span><span class="t-v">59 263</span><span class="t-c dn">szac. 2025</span></span>
       <span class="t-item"><span class="t-k">BEZROBOCIE</span><span class="t-v">6,7%</span><span class="t-c dn">vs PL 5,1%</span></span>
-      <span class="t-item"><span class="t-k">WYNAGRODZENIE</span><span class="t-v">7 890 PLN</span><span class="t-c up">91,4% śr.PL</span></span>
+      <span class="t-item"><span class="t-k">WYNAGRODZENIE</span><span class="t-v">8 520 PLN</span><span class="t-c up">szac. 2025</span></span>
       <span class="t-item"><span class="t-k">PRZYROST NAT.</span><span class="t-v">−104</span><span class="t-c dn">−1,75‰</span></span>
       <span class="t-item"><span class="t-k">PODMIOTY REGON</span><span class="t-v">6 853</span><span class="t-c up">▲+95 net</span></span>
       <span class="t-item"><span class="t-k">PRZESTĘPSTWA</span><span class="t-v">835</span><span class="t-c up">14/1000 os.</span></span>
       <span class="t-item"><span class="t-k">MIESZKANIA</span><span class="t-v">510 nowych</span><span class="t-c up">8,57/1000</span></span>
-      <span class="t-item"><span class="t-k">DOCHODY</span><span class="t-v">542,3 mln zł</span><span class="t-c up">▲+12,6%</span></span>
-      <span class="t-item"><span class="t-k">WYDATKI</span><span class="t-v">567,5 mln zł</span><span class="t-c dn">▲+15,8%</span></span>
-      <span class="t-item"><span class="t-k">DŁUG</span><span class="t-v">~201 mln zł</span><span class="t-c dn">▲+17%</span></span>
-      <span class="t-item"><span class="t-k">LUDNOŚĆ</span><span class="t-v">59 476</span><span class="t-c dn">▼−1,1%</span></span>
-      <span class="t-item"><span class="t-k">BEZROBOCIE</span><span class="t-v">6,7%</span><span class="t-c dn">vs PL 5,1%</span></span>
-      <span class="t-item"><span class="t-k">WYNAGRODZENIE</span><span class="t-v">7 890 PLN</span><span class="t-c up">91,4% śr.PL</span></span>
-      <span class="t-item"><span class="t-k">PRZYROST NAT.</span><span class="t-v">−104</span><span class="t-c dn">−1,75‰</span></span>
-      <span class="t-item"><span class="t-k">PODMIOTY REGON</span><span class="t-v">6 853</span><span class="t-c up">▲+95 net</span></span>
-      <span class="t-item"><span class="t-k">PRZESTĘPSTWA</span><span class="t-v">835</span><span class="t-c up">14/1000 os.</span></span>
-      <span class="t-item"><span class="t-k">MIESZKANIA</span><span class="t-v">510 nowych</span><span class="t-c up">8,57/1000</span></span>
+      <span class="t-item" aria-hidden="true"><span class="t-k">DOCHODY</span><span class="t-v">639,6 mln zł</span><span class="t-c up">▲+17,9%</span></span>
+      <span class="t-item" aria-hidden="true"><span class="t-k">WYDATKI</span><span class="t-v">651,1 mln zł</span><span class="t-c dn">▲+14,7%</span></span>
+      <span class="t-item" aria-hidden="true"><span class="t-k">DŁUG</span><span class="t-v">213,6 mln zł</span><span class="t-c dn">33,4% doch.</span></span>
+      <span class="t-item" aria-hidden="true"><span class="t-k">LUDNOŚĆ</span><span class="t-v">59 263</span><span class="t-c dn">szac. 2025</span></span>
+      <span class="t-item" aria-hidden="true"><span class="t-k">BEZROBOCIE</span><span class="t-v">6,7%</span><span class="t-c dn">vs PL 5,1%</span></span>
+      <span class="t-item" aria-hidden="true"><span class="t-k">WYNAGRODZENIE</span><span class="t-v">8 520 PLN</span><span class="t-c up">szac. 2025</span></span>
+      <span class="t-item" aria-hidden="true"><span class="t-k">PRZYROST NAT.</span><span class="t-v">−104</span><span class="t-c dn">−1,75‰</span></span>
+      <span class="t-item" aria-hidden="true"><span class="t-k">PODMIOTY REGON</span><span class="t-v">6 853</span><span class="t-c up">▲+95 net</span></span>
+      <span class="t-item" aria-hidden="true"><span class="t-k">PRZESTĘPSTWA</span><span class="t-v">835</span><span class="t-c up">14/1000 os.</span></span>
+      <span class="t-item" aria-hidden="true"><span class="t-k">MIESZKANIA</span><span class="t-v">510 nowych</span><span class="t-c up">8,57/1000</span></span>
     </div>
   </div>
 </div>
@@ -90,9 +101,9 @@
       <div class="vcard-arrow">↑</div>
       <div class="vcard-body">
         <h2>Dochody rosną</h2>
-        <div class="vcard-val" style="color:var(--green)" data-value="542.3" data-suffix=" mln zł">0</div>
-        <div class="vcard-label">Dochody budżetu 2024</div>
-        <div class="vcard-delta">▲ +12,6% vs 2023</div>
+        <div class="vcard-val" style="color:var(--green)" data-value="639.6" data-suffix=" mln zł">0</div>
+        <div class="vcard-label">Dochody budżetu 2025</div>
+        <div class="vcard-delta">▲ +17,9% vs 2024</div>
         <div class="vcard-note">
           Wzrost PIT o 34 mln zł (+40%). Rekordowe wpływy podatkowe (111 mln zł z PIT). 510 nowych mieszkań — 8× więcej niż średnia krajowa.
         </div>
@@ -101,12 +112,12 @@
     <div class="vcard neg">
       <div class="vcard-arrow">↓</div>
       <div class="vcard-body">
-        <h2>Zadłużenie powyżej 200M</h2>
-        <div class="vcard-val" style="color:var(--red)" data-value="201" data-prefix="~" data-suffix=" mln zł">0</div>
-        <div class="vcard-label">Łączny dług publiczny 2024</div>
-        <div class="vcard-delta">▼ przekroczony próg 200 mln</div>
+        <h2>Wydatki wyższe niż dochody</h2>
+        <div class="vcard-val" style="color:var(--red)" data-value="651.1" data-suffix=" mln zł">0</div>
+        <div class="vcard-label">Wydatki budżetu 2025</div>
+        <div class="vcard-delta">Deficyt: −11,5 mln zł</div>
         <div class="vcard-note">
-          Wydatki rosną szybciej (+15,8%) niż dochody (+12,6%). Spłata długu rozłożona do 2045 roku. Depopulacja: −372 os./rok.
+          W 2025 wydatki (651,1 mln zł) są wyższe od dochodów (639,6 mln zł), co daje deficyt ok. 11,5 mln zł.
         </div>
       </div>
     </div>
@@ -118,59 +129,60 @@
       <!-- Content will be generated by JavaScript -->
   </div>
 
-  <div class="sh">Kluczowe wskaźniki 2024</div>
+  <div class="sh">Kluczowe wskaźniki (2024 + aktualizacje 2025)</div>
+  <div class="alert-box amber mb">ℹ Dane za 2025 w BDL będą dostępne ~Q2 2026. Tam, gdzie brak pełnych danych rocznych, użyto szacunków.</div>
 
   <div class="kpi-grid mb">
     <div class="kpi" title="Całkowite dochody budżetu miasta w danym roku.">
-      <div class="kpi-top"><div class="kpi-icon">💰</div><div class="badge up">▲+12,6%</div></div>
-      <div class="kpi-val" data-value="542.3" data-suffix="M">0</div>
+      <div class="kpi-top"><div class="kpi-icon">💰</div><div class="badge up">▲+17,9%</div></div>
+      <div class="kpi-val" data-value="639.6" data-suffix="M">0</div>
       <div class="kpi-name">Dochody gminy</div>
-      <div class="kpi-sub">vs 2023: 481,7 mln zł</div>
+      <div class="kpi-sub">vs 2024: 542,3 mln zł</div>
     </div>
     <div class="kpi" title="Całkowite wydatki budżetu miasta w danym roku.">
-      <div class="kpi-top"><div class="kpi-icon">📤</div><div class="badge dn">▲+15,8%</div></div>
-      <div class="kpi-val" data-value="567.5" data-suffix="M">0</div>
+      <div class="kpi-top"><div class="kpi-icon">📤</div><div class="badge dn">▲+14,7%</div></div>
+      <div class="kpi-val" data-value="651.1" data-suffix="M">0</div>
       <div class="kpi-name">Wydatki gminy</div>
-      <div class="kpi-sub">vs 2023: 490,2 mln zł</div>
+      <div class="kpi-sub">vs 2024: 567,5 mln zł</div>
     </div>
     <div class="kpi" title="Różnica między wydatkami a dochodami. Wartość ujemna oznacza deficyt.">
-      <div class="kpi-top"><div class="kpi-icon">🏦</div><div class="badge dn">−25,2M</div></div>
-      <div class="kpi-val" style="color:var(--red)" data-value="-25.2" data-suffix="M">0</div>
+      <div class="kpi-top"><div class="kpi-icon">🏦</div><div class="badge dn">−11,5M</div></div>
+      <div class="kpi-val" style="color:var(--red)" data-value="-11.5" data-suffix="M">0</div>
       <div class="kpi-name">Deficyt budżetowy</div>
-      <div class="kpi-sub">4,6% dochodów (pokryty kredytem)</div>
+      <div class="kpi-sub">1,8% dochodów (2025)</div>
     </div>
     <div class="kpi" title="Łączne zobowiązania finansowe miasta (kredyty, pożyczki, obligacje).">
-      <div class="kpi-top"><div class="kpi-icon">⚠️</div><div class="badge dn">40,8%</div></div>
-      <div class="kpi-val sm" style="color:var(--amber)" data-value="201" data-prefix="~" data-suffix="M">0</div>
+      <div class="kpi-top"><div class="kpi-icon">⚠️</div><div class="badge dn">33,4%</div></div>
+      <div class="kpi-val sm" style="color:var(--amber)" data-value="213.6" data-suffix="M">0</div>
       <div class="kpi-name">Dług publiczny</div>
-      <div class="kpi-sub">~40,8% dochodów (limit 60%)</div>
+      <div class="kpi-sub">33,4% dochodów (limit 60%)</div>
     </div>
   </div>
 
   <div class="kpi-grid kpi-grid-6 mb">
     <div class="kpi" title="Oficjalna liczba mieszkańców zarejestrowanych w mieście.">
       <div class="kpi-top"><div class="kpi-icon">👥</div><div class="badge dn">▼−1,1%</div></div>
-      <div class="kpi-val sm" data-value="59476">0</div>
+      <div class="kpi-val sm" data-value="59263">0</div>
       <div class="kpi-name">Mieszkańców</div>
       <div class="kpi-sub">prognoza 2050: 46 082</div>
     </div>
     <div class="kpi" title="Różnica między liczbą osób, które zameldowały się w mieście, a liczbą osób, które się wymeldowały.">
-      <div class="kpi-top"><div class="kpi-icon">📉</div><div class="badge dn">−268</div></div>
-      <div class="kpi-val sm" style="color:var(--red)" data-value="-268">0</div>
+      <div class="kpi-top"><div class="kpi-icon">📉</div><div class="badge dn">−108</div></div>
+      <div class="kpi-val sm" style="color:var(--red)" data-value="-108">0</div>
       <div class="kpi-name">Saldo migracji</div>
-      <div class="kpi-sub">wew: −285, zagr: +17</div>
+      <div class="kpi-sub">wew: −123, zagr: +15 (szac. 2025)</div>
     </div>
     <div class="kpi" title="Stopa bezrobocia rejestrowanego dla miasta Łomża.">
       <div class="kpi-top"><div class="kpi-icon">💼</div><div class="badge dn">6,7%</div></div>
       <div class="kpi-val sm" style="color:var(--amber)" data-value="6.7" data-suffix="%">0</div>
       <div class="kpi-name">Bezrobocie rej.</div>
-      <div class="kpi-sub">PL avg: 5,1%</div>
+      <div class="kpi-sub">GUS miesięczne: szac. 2025</div>
     </div>
     <div class="kpi" title="Przeciętne miesięczne wynagrodzenie brutto w sektorze przedsiębiorstw.">
-      <div class="kpi-top"><div class="kpi-icon">💵</div><div class="badge am">91%</div></div>
-      <div class="kpi-val sm" data-value="7890">0</div>
+      <div class="kpi-top"><div class="kpi-icon">💵</div><div class="badge am">szac. 2025</div></div>
+      <div class="kpi-val sm" data-value="8520">0</div>
       <div class="kpi-name">Śr. wynagrodzenie PLN</div>
-      <div class="kpi-sub">PL avg: 8 630 PLN</div>
+      <div class="kpi-sub">PL: 8 935–9 583 (szac. 2025)</div>
     </div>
     <div class="kpi" title="Liczba nowo wybudowanych mieszkań w przeliczeniu na 1000 mieszkańców. Wskaźnik rozwoju budownictwa.">
       <div class="kpi-top"><div class="kpi-icon">🏗️</div><div class="badge up">510 lok.</div></div>
@@ -196,11 +208,81 @@
         <button id="chart-mode-percapita" class="chart-toggle-btn">Na mieszkańca</button>
       </div>
     </div>
+    <div class="chart-toolbar">
+      <div class="chart-filter-group">
+        <label for="history-year-from">Lata:</label>
+        <select id="history-year-from"></select>
+        <span>—</span>
+        <select id="history-year-to"></select>
+      </div>
+      <div class="chart-toggle-wrapper">
+        <button id="history-type-combo" class="chart-toggle-btn active">Combo</button>
+        <button id="history-type-line" class="chart-toggle-btn">Liniowy</button>
+        <button id="history-type-bar" class="chart-toggle-btn">Słupkowy</button>
+      </div>
+      <div class="chart-export-group">
+        <button id="history-export-csv" class="chart-toggle-btn">CSV</button>
+        <button id="history-export-pdf" class="chart-toggle-btn">PDF</button>
+        <button id="history-export-png" class="chart-toggle-btn">PNG</button>
+        <button id="history-export-svg" class="chart-toggle-btn">SVG</button>
+      </div>
+    </div>
     <div id="history-chart" style="width:100%;height:180px;position:relative;display:flex;align-items:flex-end;gap:6px;padding-bottom:20px;"></div>
     <div class="chart-legend">
       <div class="chart-legend-item"><div class="cl-dot" style="background:var(--green)"></div>Dochody</div>
       <div class="chart-legend-item"><div class="cl-dot" style="background:var(--red)"></div>Wydatki</div>
       <div class="chart-legend-item"><div class="cl-dot" style="background:var(--amber); width:10px; height:1.5px; border-radius: 1px;"></div>Wynik (nadwyżka/deficyt)</div>
+    </div>
+  </div>
+
+  <div class="sh">Co to znaczy dla mieszkańca?</div>
+  <div class="panel mb" id="citizen-impact-panel">
+    <div class="kpi-grid">
+      <div class="kpi">
+        <div class="kpi-val sm" id="citizen-debt-per-person">0</div>
+        <div class="kpi-name">Dług na mieszkańca</div>
+        <div class="kpi-sub">Łączny dług / liczba mieszkańców</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-val sm" id="citizen-deficit-per-person">0</div>
+        <div class="kpi-name">Deficyt na mieszkańca</div>
+        <div class="kpi-sub">Roczny deficyt / liczba mieszkańców</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-val sm" id="citizen-edu-per-student">0</div>
+        <div class="kpi-name">Koszt oświaty na ucznia</div>
+        <div class="kpi-sub">Wydatki oświatowe / ~11 tys. uczniów</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-val sm" id="citizen-income-per-person">0</div>
+        <div class="kpi-name">Dochody na mieszkańca</div>
+        <div class="kpi-sub">Dochody miasta / liczba mieszkańców</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sh">Porównanie z podobnymi miastami</div>
+  <div class="panel mb">
+    <div class="panel-title"><h3>Łomża vs Suwałki / Białystok / Ostrołęka / Siedlce</h3><span class="src">GUS/BDL + szacunki 2025</span></div>
+    <div class="compare-table-wrap">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>Miasto</th>
+            <th>Ludność</th>
+            <th>Bezrobocie</th>
+            <th>Śr. wynagrodzenie</th>
+            <th>Nowe mieszkania / 1000</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Łomża</td><td>59 263</td><td>6,7%</td><td>8 520 zł</td><td>8,57</td></tr>
+          <tr><td>Suwałki</td><td>~68 000</td><td>~5,9%</td><td>~8 900 zł</td><td>~7,8</td></tr>
+          <tr><td>Białystok</td><td>~292 000</td><td>~5,3%</td><td>~9 600 zł</td><td>~6,9</td></tr>
+          <tr><td>Ostrołęka</td><td>~50 000</td><td>~8,1%</td><td>~8 200 zł</td><td>~5,7</td></tr>
+          <tr><td>Siedlce</td><td>~76 000</td><td>~6,1%</td><td>~8 700 zł</td><td>~6,1</td></tr>
+        </tbody>
+      </table>
     </div>
   </div>
 
@@ -282,22 +364,22 @@
         <div class="comp-row">
           <div class="comp-lbl">Dochody ogółem</div>
           <div class="comp-bars">
-            <div class="comp-bar-row"><div class="comp-yr">2023</div><div class="comp-track"><div class="comp-fill" style="width:85%;background:var(--text3)"></div></div><div class="comp-val">481,7 mln</div></div>
-            <div class="comp-bar-row"><div class="comp-yr">2024</div><div class="comp-track"><div class="comp-fill" style="width:100%;background:var(--green)"></div></div><div class="comp-val">542,3 mln</div></div>
+            <div class="comp-bar-row"><div class="comp-yr">2023</div><div class="comp-track"><div class="comp-fill" style="--w:85%;width:85%;background:var(--text3)"></div></div><div class="comp-val">481,7 mln</div></div>
+            <div class="comp-bar-row"><div class="comp-yr">2024</div><div class="comp-track"><div class="comp-fill" style="--w:100%;width:100%;background:var(--green)"></div></div><div class="comp-val">542,3 mln</div></div>
           </div>
         </div>
         <div class="comp-row">
           <div class="comp-lbl">Wydatki ogółem</div>
           <div class="comp-bars">
-            <div class="comp-bar-row"><div class="comp-yr">2023</div><div class="comp-track"><div class="comp-fill" style="width:86%;background:var(--text3)"></div></div><div class="comp-val">490,2 mln</div></div>
-            <div class="comp-bar-row"><div class="comp-yr">2024</div><div class="comp-track"><div class="comp-fill" style="width:100%;background:var(--red)"></div></div><div class="comp-val">567,5 mln</div></div>
+            <div class="comp-bar-row"><div class="comp-yr">2023</div><div class="comp-track"><div class="comp-fill" style="--w:86%;width:86%;background:var(--text3)"></div></div><div class="comp-val">490,2 mln</div></div>
+            <div class="comp-bar-row"><div class="comp-yr">2024</div><div class="comp-track"><div class="comp-fill" style="--w:100%;width:100%;background:var(--red)"></div></div><div class="comp-val">567,5 mln</div></div>
           </div>
         </div>
         <div class="comp-row">
           <div class="comp-lbl">Inwestycje</div>
           <div class="comp-bars">
-            <div class="comp-bar-row"><div class="comp-yr">2023</div><div class="comp-track"><div class="comp-fill" style="width:100%;background:var(--text3)"></div></div><div class="comp-val">62,3 mln</div></div>
-            <div class="comp-bar-row"><div class="comp-yr">2024</div><div class="comp-track"><div class="comp-fill" style="width:82%;background:var(--amber)"></div></div><div class="comp-val">50,9 mln</div></div>
+            <div class="comp-bar-row"><div class="comp-yr">2023</div><div class="comp-track"><div class="comp-fill" style="--w:100%;width:100%;background:var(--text3)"></div></div><div class="comp-val">62,3 mln</div></div>
+            <div class="comp-bar-row"><div class="comp-yr">2024</div><div class="comp-track"><div class="comp-fill" style="--w:82%;width:82%;background:var(--amber)"></div></div><div class="comp-val">50,9 mln</div></div>
           </div>
         </div>
       </div>
@@ -309,7 +391,7 @@
 
   <div class="g3 mb">
     <div class="panel">
-      <div class="panel-title"><h3>Gauge — poziom zadłużenia</h3><span class="src">WPF 2024</span></div>
+      <div class="panel-title"><h3>Gauge — poziom zadłużenia</h3><span class="src">WPF / Rb-Z 2025</span></div>
       <div class="gauge-wrap">
         <svg class="gauge-svg" viewBox="0 0 200 115">
           <defs>
@@ -326,7 +408,7 @@
           <path d="M 18 100 A 82 82 0 0 1 182 100" fill="none" stroke="url(#gGrad)" stroke-width="16" stroke-linecap="round"
             stroke-dasharray="257" stroke-dashoffset="152" style="animation:gaugeFill 2s ease both;"/>
           <circle cx="100" cy="100" r="7" fill="var(--amber)" filter="drop-shadow(0 0 6px #ffb800)"/>
-          <text x="100" y="70" text-anchor="middle" fill="#ffb800" font-family="Syne,sans-serif" font-weight="800" font-size="26">40,8%</text>
+          <text x="100" y="70" text-anchor="middle" fill="#ffb800" font-family="Syne,sans-serif" font-weight="800" font-size="26">33,4%</text>
           <text x="100" y="84" text-anchor="middle" fill="#4a5568" font-family="JetBrains Mono,monospace" font-size="8">z limitu 60%</text>
           <text x="18" y="115" fill="#4a5568" font-size="8" font-family="JetBrains Mono,monospace">0%</text>
           <text x="165" y="115" fill="#4a5568" font-size="8" font-family="JetBrains Mono,monospace">60%</text>
@@ -340,22 +422,26 @@
     </div>
 
     <div class="panel">
-      <div class="panel-title"><h3>Składniki długu publicznego</h3><span class="src">BIP 2024</span></div>
+      <div class="panel-title"><h3>Składniki długu publicznego</h3><span class="src">BIP 2025</span></div>
       <div class="debt-table">
-        <div class="dt-row"><span class="dt-lbl">Dług ogółem (koniec 2024)</span><span class="dt-val r">~201 mln zł</span></div>
+        <div class="dt-row"><span class="dt-lbl">Dług ogółem (koniec 2025)</span><span class="dt-val r">213,6 mln zł</span></div>
         <div class="dt-row"><span class="dt-lbl">Kredyty bankowe</span><span class="dt-val r">główna pozycja</span></div>
         <div class="dt-row"><span class="dt-lbl">Dodatkowy kredyt 2024</span><span class="dt-val r">28,9 mln zł</span></div>
         <div class="dt-row"><span class="dt-lbl">Spłacone raty kapital. 2024</span><span class="dt-val g">30+ mln zł</span></div>
         <div class="dt-row"><span class="dt-lbl">Koszt obsługi długu 2024</span><span class="dt-val a">~12 mln zł</span></div>
-        <div class="dt-row"><span class="dt-lbl">Relacja do dochodów</span><span class="dt-val a">40,8%</span></div>
-        <div class="dt-row"><span class="dt-lbl">Prognoza koniec 2025</span><span class="dt-val r">213,6 mln zł</span></div>
+        <div class="dt-row"><span class="dt-lbl">Relacja do dochodów</span><span class="dt-val a">33,4%</span></div>
+        <div class="dt-row"><span class="dt-lbl">WPF prognoza 2025</span><span class="dt-val r">213,6 mln zł</span></div>
         <div class="dt-row"><span class="dt-lbl">Spłata ostatniej raty</span><span class="dt-val b">2045 rok</span></div>
       </div>
     </div>
 
     <div class="panel">
       <div class="panel-title"><h3>Prognoza zadłużenia WPF</h3><span class="src">WPF Łomża 2024</span></div>
-      <div id="debt-forecast-chart" style="width:100%;height:140px;position:relative;display:flex;align-items:flex-end;gap:5px;padding-bottom:22px;"></div>
+      <div class="chart-export-group" style="margin-bottom:.6rem">
+        <button id="debt-export-png" class="chart-toggle-btn">PNG</button>
+        <button id="debt-export-svg" class="chart-toggle-btn">SVG</button>
+      </div>
+      <div id="debt-forecast-chart" style="width:100%;height:170px;position:relative;"></div>
       <div class="alert-box red" style="margin-top:1rem">
         ⚠ Zadłużenie rośnie z roku na rok. Spłata rozłożona do 2045. Przy depopulacji — długiem obciążone będą przyszłe pokolenia.
       </div>
@@ -371,22 +457,22 @@
     <div class="comp-row">
       <div class="comp-lbl">Podatek od nieruchomości (budynki)</div>
       <div class="comp-bars">
-        <div class="comp-bar-row"><div class="comp-yr">2023</div><div class="comp-track"><div class="comp-fill" style="width:72%;background:var(--text3)"></div></div><div class="comp-val">max ust.</div></div>
-        <div class="comp-bar-row"><div class="comp-yr">2024</div><div class="comp-track"><div class="comp-fill" style="width:100%;background:var(--red)"></div></div><div class="comp-val">+30% wzrost</div></div>
+        <div class="comp-bar-row"><div class="comp-yr">2023</div><div class="comp-track"><div class="comp-fill" style="--w:72%;width:72%;background:var(--text3)"></div></div><div class="comp-val">max ust.</div></div>
+        <div class="comp-bar-row"><div class="comp-yr">2024</div><div class="comp-track"><div class="comp-fill" style="--w:100%;width:100%;background:var(--red)"></div></div><div class="comp-val">+30% wzrost</div></div>
       </div>
     </div>
     <div class="comp-row">
       <div class="comp-lbl">Wpływy z PIT (udział gminy)</div>
       <div class="comp-bars">
-        <div class="comp-bar-row"><div class="comp-yr">2023</div><div class="comp-track"><div class="comp-fill" style="width:75%;background:var(--text3)"></div></div><div class="comp-val">77 mln zł</div></div>
-        <div class="comp-bar-row"><div class="comp-yr">2024</div><div class="comp-track"><div class="comp-fill" style="width:100%;background:var(--green)"></div></div><div class="comp-val">111 mln zł</div></div>
+        <div class="comp-bar-row"><div class="comp-yr">2023</div><div class="comp-track"><div class="comp-fill" style="--w:75%;width:75%;background:var(--text3)"></div></div><div class="comp-val">77 mln zł</div></div>
+        <div class="comp-bar-row"><div class="comp-yr">2024</div><div class="comp-track"><div class="comp-fill" style="--w:100%;width:100%;background:var(--green)"></div></div><div class="comp-val">111 mln zł</div></div>
       </div>
     </div>
     <div class="comp-row">
       <div class="comp-lbl">Wydatki na 1 mieszkańca</div>
       <div class="comp-bars">
-        <div class="comp-bar-row"><div class="comp-yr">2023</div><div class="comp-track"><div class="comp-fill" style="width:86%;background:var(--text3)"></div></div><div class="comp-val">8 195 zł</div></div>
-        <div class="comp-bar-row"><div class="comp-yr">2024</div><div class="comp-track"><div class="comp-fill" style="width:100%;background:var(--amber)"></div></div><div class="comp-val">9 542 zł</div></div>
+        <div class="comp-bar-row"><div class="comp-yr">2023</div><div class="comp-track"><div class="comp-fill" style="--w:86%;width:86%;background:var(--text3)"></div></div><div class="comp-val">8 195 zł</div></div>
+        <div class="comp-bar-row"><div class="comp-yr">2024</div><div class="comp-track"><div class="comp-fill" style="--w:100%;width:100%;background:var(--amber)"></div></div><div class="comp-val">9 542 zł</div></div>
       </div>
     </div>
   </div>
@@ -402,8 +488,8 @@
   <div class="kpi-grid mb">
     <div class="kpi" title="Oficjalna liczba mieszkańców zarejestrowanych w mieście.">
       <div class="kpi-top"><div class="kpi-icon">👥</div><div class="badge dn">▼−6,9% od 2002</div></div>
-      <div class="kpi-val" data-value="59476">0</div>
-      <div class="kpi-name">Mieszkańców 2024</div>
+      <div class="kpi-val" data-value="59263">0</div>
+      <div class="kpi-name">Mieszkańców 2025 (szac.)</div>
       <div class="kpi-sub">2002: 63 890 | prognoza 2050: 46 082</div>
     </div>
     <div class="kpi" title="Różnica między liczbą urodzeń żywych a liczbą zgonów. Wartość ujemna oznacza ubytek naturalny.">
@@ -413,10 +499,10 @@
       <div class="kpi-sub">urodzenia: 394 | zgony: 498</div>
     </div>
     <div class="kpi" title="Różnica między liczbą osób, które zameldowały się w mieście, a liczbą osób, które się wymeldowały.">
-      <div class="kpi-top"><div class="kpi-icon">✈️</div><div class="badge dn">−268</div></div>
-      <div class="kpi-val" style="color:var(--red)" data-value="-268">0</div>
+      <div class="kpi-top"><div class="kpi-icon">✈️</div><div class="badge dn">−108</div></div>
+      <div class="kpi-val" style="color:var(--red)" data-value="-108">0</div>
       <div class="kpi-name">Saldo migracji</div>
-      <div class="kpi-sub">zam.: +573 | wymeld.: −858</div>
+      <div class="kpi-sub">wew: −123 | zagr.: +15 (szac. 2025)</div>
     </div>
     <div class="kpi" title="Mediana wieku populacji miasta.">
       <div class="kpi-top"><div class="kpi-icon">👶</div><div class="badge am">1,17</div></div>
@@ -483,41 +569,41 @@
         <div class="comp-row">
           <div class="comp-lbl">Urodzenia żywe</div>
           <div class="comp-bars">
-            <div class="comp-bar-row"><div class="comp-yr">2023</div><div class="comp-track"><div class="comp-fill" style="width:100%;background:var(--text3)"></div></div><div class="comp-val">~456</div></div>
-            <div class="comp-bar-row"><div class="comp-yr">2024</div><div class="comp-track"><div class="comp-fill" style="width:86%;background:var(--green)"></div></div><div class="comp-val">394</div></div>
+            <div class="comp-bar-row"><div class="comp-yr">2023</div><div class="comp-track"><div class="comp-fill" style="--w:100%;width:100%;background:var(--text3)"></div></div><div class="comp-val">~456</div></div>
+            <div class="comp-bar-row"><div class="comp-yr">2024</div><div class="comp-track"><div class="comp-fill" style="--w:86%;width:86%;background:var(--green)"></div></div><div class="comp-val">394</div></div>
           </div>
         </div>
         <div class="comp-row">
           <div class="comp-lbl">Zgony</div>
           <div class="comp-bars">
-            <div class="comp-bar-row"><div class="comp-yr">2023</div><div class="comp-track"><div class="comp-fill" style="width:100%;background:var(--text3)"></div></div><div class="comp-val">~503</div></div>
-            <div class="comp-bar-row"><div class="comp-yr">2024</div><div class="comp-track"><div class="comp-fill" style="width:99%;background:var(--red)"></div></div><div class="comp-val">498</div></div>
+            <div class="comp-bar-row"><div class="comp-yr">2023</div><div class="comp-track"><div class="comp-fill" style="--w:100%;width:100%;background:var(--text3)"></div></div><div class="comp-val">~503</div></div>
+            <div class="comp-bar-row"><div class="comp-yr">2024</div><div class="comp-track"><div class="comp-fill" style="--w:99%;width:99%;background:var(--red)"></div></div><div class="comp-val">498</div></div>
           </div>
         </div>
         <div class="comp-row">
           <div class="comp-lbl">Małżeństwa</div>
           <div class="comp-bars">
-            <div class="comp-bar-row"><div class="comp-yr">2024</div><div class="comp-track"><div class="comp-fill" style="width:60%;background:var(--blue)"></div></div><div class="comp-val">196 (3,3‰)</div></div>
+            <div class="comp-bar-row"><div class="comp-yr">2024</div><div class="comp-track"><div class="comp-fill" style="--w:60%;width:60%;background:var(--blue)"></div></div><div class="comp-val">196 (3,3‰)</div></div>
           </div>
         </div>
         <div class="comp-row">
           <div class="comp-lbl">Rozwody</div>
           <div class="comp-bars">
-            <div class="comp-bar-row"><div class="comp-yr">2024</div><div class="comp-track"><div class="comp-fill" style="width:43%;background:var(--amber)"></div></div><div class="comp-val">~120 (2,0‰)</div></div>
+            <div class="comp-bar-row"><div class="comp-yr">2024</div><div class="comp-track"><div class="comp-fill" style="--w:43%;width:43%;background:var(--amber)"></div></div><div class="comp-val">~120 (2,0‰)</div></div>
           </div>
         </div>
       </div>
 
       <div class="panel">
-        <div class="panel-title"><h3>Migracje 2024</h3><span class="src">GUS 2024</span></div>
+        <div class="panel-title"><h3>Migracje 2025 (szacunek)</h3><span class="src">GUS szacunek 2025</span></div>
         <div style="display:flex;justify-content:space-around;padding:.5rem 0;text-align:center;border-bottom:1px solid var(--border);margin-bottom:.75rem">
-          <div><div style="font-family:'Syne',sans-serif;font-weight:800;font-size:1.8rem;color:var(--green)">+573</div><div style="font-size:.6rem;color:var(--text3)">ZAMELDOWANIA</div></div>
+          <div><div style="font-family:'Syne',sans-serif;font-weight:800;font-size:1.8rem;color:var(--green)">+15</div><div style="font-size:.6rem;color:var(--text3)">SALDO ZAGR.</div></div>
           <div style="font-size:1.5rem;color:var(--border2);display:flex;align-items:center">/</div>
-          <div><div style="font-family:'Syne',sans-serif;font-weight:800;font-size:1.8rem;color:var(--red)">−858</div><div style="font-size:.6rem;color:var(--text3)">WYMELDOWANIA</div></div>
+          <div><div style="font-family:'Syne',sans-serif;font-weight:800;font-size:1.8rem;color:var(--red)">−123</div><div style="font-size:.6rem;color:var(--text3)">SALDO WEW.</div></div>
           <div style="font-size:1.5rem;color:var(--border2);display:flex;align-items:center">=</div>
-          <div><div style="font-family:'Syne',sans-serif;font-weight:800;font-size:1.8rem;color:var(--red)">−285</div><div style="font-size:.6rem;color:var(--text3)">SALDO WEW.</div></div>
+          <div><div style="font-family:'Syne',sans-serif;font-weight:800;font-size:1.8rem;color:var(--red)">−108</div><div style="font-size:.6rem;color:var(--text3)">SALDO ŁĄCZNE</div></div>
         </div>
-        <div class="alert-box amber">ℹ Saldo zagraniczne: +17. Łączne saldo migracji: −268. Łomża traci ok. 370 os./rok (migracje + przyrost nat.).</div>
+        <div class="alert-box amber">ℹ Saldo zagraniczne: +15. Łączne saldo migracji: −108. Łomża traci ok. 210 os./rok (migracje + przyrost nat., szac. 2025).</div>
       </div>
     </div>
   </div>
@@ -528,7 +614,7 @@
      TAB 4: GOSPODARKA & ZATRUDNIENIE
      ============================================ -->
 <section class="tab-panel" id="tab-economy">
-  <div class="sh">Rynek pracy i gospodarka — Łomża 2024</div>
+  <div class="sh">Rynek pracy i gospodarka — Łomża 2025 (szacunki)</div>
 
   <div class="kpi-grid mb">
     <div class="kpi" title="Stopa bezrobocia rejestrowanego dla miasta Łomża.">
@@ -538,10 +624,10 @@
       <div class="kpi-sub">k: 7,6% | m: 6,1%</div>
     </div>
     <div class="kpi" title="Przeciętne miesięczne wynagrodzenie brutto w sektorze przedsiębiorstw.">
-      <div class="kpi-top"><div class="kpi-icon">💰</div><div class="badge am">91,4% PL</div></div>
-      <div class="kpi-val" data-value="7890">0</div>
+      <div class="kpi-top"><div class="kpi-icon">💰</div><div class="badge am">szac. 2025</div></div>
+      <div class="kpi-val" data-value="8520">0</div>
       <div class="kpi-name">Wynagrodzenie brutto PLN</div>
-      <div class="kpi-sub">PL avg: 8 630 PLN</div>
+      <div class="kpi-sub">PL: 8 935–9 583 (szac. 2025)</div>
     </div>
     <div class="kpi" title="Liczba osób pracujących w podmiotach gospodarki narodowej.">
       <div class="kpi-top"><div class="kpi-icon">👷</div><div class="badge up">245/1000</div></div>
@@ -654,7 +740,7 @@
      TAB 5: BUDOWNICTWO & NIERUCHOMOŚCI
      ============================================ -->
 <section class="tab-panel" id="tab-housing">
-  <div class="sh">Rynek nieruchomości i budownictwo — GUS 2024</div>
+  <div class="sh">Rynek nieruchomości i budownictwo — aktualizacja 2025</div>
 
   <div class="kpi-grid mb">
     <div class="kpi" title="Liczba mieszkań oddanych do użytkowania w danym roku.">
@@ -664,10 +750,10 @@
       <div class="kpi-sub">8,57 / 1000 mieszkańców (▲161% nad PL)</div>
     </div>
     <div class="kpi" title="Średnia cena transakcyjna za metr kwadratowy lokalu mieszkalnego.">
-      <div class="kpi-top"><div class="kpi-icon">💲</div><div class="badge dn">vs PL 8 257</div></div>
-      <div class="kpi-val" data-value="7560">0</div>
+      <div class="kpi-top"><div class="kpi-icon">💲</div><div class="badge dn">NBP Q3 2025</div></div>
+      <div class="kpi-val" data-value="8100">0</div>
       <div class="kpi-name">Mediana ceny zł/m²</div>
-      <div class="kpi-sub">rynek pierwotny: 7 727 | wtórny: 7 353</div>
+      <div class="kpi-sub">szacunek: ~8 100 zł/m² (NBP, kw. 3/2025)</div>
     </div>
     <div class="kpi" title="Całkowita liczba lokali mieszkalnych w mieście.">
       <div class="kpi-top"><div class="kpi-icon">🏠</div><div class="badge up">440/1000</div></div>
@@ -714,29 +800,29 @@
       <div class="comp-row">
         <div class="comp-lbl">do 40 m² (kawalerki)</div>
         <div class="comp-bars">
-          <div class="comp-bar-row"><div class="comp-yr">PIE.</div><div class="comp-track"><div class="comp-fill" style="width:90%;background:var(--blue)"></div></div><div class="comp-val">7 456 zł/m²</div></div>
-          <div class="comp-bar-row"><div class="comp-yr">WTÓ.</div><div class="comp-track"><div class="comp-fill" style="width:78%;background:var(--text3)"></div></div><div class="comp-val">6 455 zł/m²</div></div>
+          <div class="comp-bar-row"><div class="comp-yr">PIE.</div><div class="comp-track"><div class="comp-fill" style="--w:90%;width:90%;background:var(--blue)"></div></div><div class="comp-val">7 456 zł/m²</div></div>
+          <div class="comp-bar-row"><div class="comp-yr">WTÓ.</div><div class="comp-track"><div class="comp-fill" style="--w:78%;width:78%;background:var(--text3)"></div></div><div class="comp-val">6 455 zł/m²</div></div>
         </div>
       </div>
       <div class="comp-row">
         <div class="comp-lbl">40–60 m² (standardowe)</div>
         <div class="comp-bars">
-          <div class="comp-bar-row"><div class="comp-yr">PIE.</div><div class="comp-track"><div class="comp-fill" style="width:100%;background:var(--blue)"></div></div><div class="comp-val">7 885 zł/m²</div></div>
-          <div class="comp-bar-row"><div class="comp-yr">WTÓ.</div><div class="comp-track"><div class="comp-fill" style="width:89%;background:var(--text3)"></div></div><div class="comp-val">7 500 zł/m²</div></div>
+          <div class="comp-bar-row"><div class="comp-yr">PIE.</div><div class="comp-track"><div class="comp-fill" style="--w:100%;width:100%;background:var(--blue)"></div></div><div class="comp-val">7 885 zł/m²</div></div>
+          <div class="comp-bar-row"><div class="comp-yr">WTÓ.</div><div class="comp-track"><div class="comp-fill" style="--w:89%;width:89%;background:var(--text3)"></div></div><div class="comp-val">7 500 zł/m²</div></div>
         </div>
       </div>
       <div class="comp-row">
         <div class="comp-lbl">60–80 m² (duże)</div>
         <div class="comp-bars">
-          <div class="comp-bar-row"><div class="comp-yr">PIE.</div><div class="comp-track"><div class="comp-fill" style="width:98%;background:var(--blue)"></div></div><div class="comp-val">7 742 zł/m²</div></div>
-          <div class="comp-bar-row"><div class="comp-yr">WTÓ.</div><div class="comp-track"><div class="comp-fill" style="width:95%;background:var(--text3)"></div></div><div class="comp-val">7 695 zł/m²</div></div>
+          <div class="comp-bar-row"><div class="comp-yr">PIE.</div><div class="comp-track"><div class="comp-fill" style="--w:98%;width:98%;background:var(--blue)"></div></div><div class="comp-val">7 742 zł/m²</div></div>
+          <div class="comp-bar-row"><div class="comp-yr">WTÓ.</div><div class="comp-track"><div class="comp-fill" style="--w:95%;width:95%;background:var(--text3)"></div></div><div class="comp-val">7 695 zł/m²</div></div>
         </div>
       </div>
       <div class="comp-row">
         <div class="comp-lbl">80+ m² (premium)</div>
         <div class="comp-bars">
-          <div class="comp-bar-row"><div class="comp-yr">PIE.</div><div class="comp-track"><div class="comp-fill" style="width:88%;background:var(--blue)"></div></div><div class="comp-val">7 428 zł/m²</div></div>
-          <div class="comp-bar-row"><div class="comp-yr">WTÓ.</div><div class="comp-track"><div class="comp-fill" style="width:73%;background:var(--text3)"></div></div><div class="comp-val">6 098 zł/m²</div></div>
+          <div class="comp-bar-row"><div class="comp-yr">PIE.</div><div class="comp-track"><div class="comp-fill" style="--w:88%;width:88%;background:var(--blue)"></div></div><div class="comp-val">7 428 zł/m²</div></div>
+          <div class="comp-bar-row"><div class="comp-yr">WTÓ.</div><div class="comp-track"><div class="comp-fill" style="--w:73%;width:73%;background:var(--text3)"></div></div><div class="comp-val">6 098 zł/m²</div></div>
         </div>
       </div>
     </div>
@@ -822,29 +908,29 @@
       <div class="comp-row">
         <div class="comp-lbl">Przestępstwa ogółem</div>
         <div class="comp-bars">
-          <div class="comp-bar-row"><div class="comp-yr">Łomża</div><div class="comp-track"><div class="comp-fill" style="width:68%;background:var(--green)"></div></div><div class="comp-val">14,04/1k</div></div>
-          <div class="comp-bar-row"><div class="comp-yr">PL</div><div class="comp-track"><div class="comp-fill" style="width:100%;background:var(--red)"></div></div><div class="comp-val">20,57/1k</div></div>
+          <div class="comp-bar-row"><div class="comp-yr">Łomża</div><div class="comp-track"><div class="comp-fill" style="--w:68%;width:68%;background:var(--green)"></div></div><div class="comp-val">14,04/1k</div></div>
+          <div class="comp-bar-row"><div class="comp-yr">PL</div><div class="comp-track"><div class="comp-fill" style="--w:100%;width:100%;background:var(--red)"></div></div><div class="comp-val">20,57/1k</div></div>
         </div>
       </div>
       <div class="comp-row">
         <div class="comp-lbl">Przestępstwa gosp.</div>
         <div class="comp-bars">
-          <div class="comp-bar-row"><div class="comp-yr">Łomża</div><div class="comp-track"><div class="comp-fill" style="width:47%;background:var(--green)"></div></div><div class="comp-val">3,03/1k</div></div>
-          <div class="comp-bar-row"><div class="comp-yr">PL</div><div class="comp-track"><div class="comp-fill" style="width:100%;background:var(--red)"></div></div><div class="comp-val">6,38/1k</div></div>
+          <div class="comp-bar-row"><div class="comp-yr">Łomża</div><div class="comp-track"><div class="comp-fill" style="--w:47%;width:47%;background:var(--green)"></div></div><div class="comp-val">3,03/1k</div></div>
+          <div class="comp-bar-row"><div class="comp-yr">PL</div><div class="comp-track"><div class="comp-fill" style="--w:100%;width:100%;background:var(--red)"></div></div><div class="comp-val">6,38/1k</div></div>
         </div>
       </div>
       <div class="comp-row">
         <div class="comp-lbl">Przestępstwa vs mienie</div>
         <div class="comp-bars">
-          <div class="comp-bar-row"><div class="comp-yr">Łomża</div><div class="comp-track"><div class="comp-fill" style="width:67%;background:var(--green)"></div></div><div class="comp-val">6,64/1k</div></div>
-          <div class="comp-bar-row"><div class="comp-yr">PL</div><div class="comp-track"><div class="comp-fill" style="width:100%;background:var(--red)"></div></div><div class="comp-val">9,86/1k</div></div>
+          <div class="comp-bar-row"><div class="comp-yr">Łomża</div><div class="comp-track"><div class="comp-fill" style="--w:67%;width:67%;background:var(--green)"></div></div><div class="comp-val">6,64/1k</div></div>
+          <div class="comp-bar-row"><div class="comp-yr">PL</div><div class="comp-track"><div class="comp-fill" style="--w:100%;width:100%;background:var(--red)"></div></div><div class="comp-val">9,86/1k</div></div>
         </div>
       </div>
       <div class="comp-row">
         <div class="comp-lbl">Przestępstwa drogowe</div>
         <div class="comp-bars">
-          <div class="comp-bar-row"><div class="comp-yr">Łomża</div><div class="comp-track"><div class="comp-fill" style="width:72%;background:var(--amber)"></div></div><div class="comp-val">1,11/1k</div></div>
-          <div class="comp-bar-row"><div class="comp-yr">PL</div><div class="comp-track"><div class="comp-fill" style="width:100%;background:var(--text3)"></div></div><div class="comp-val">1,55/1k</div></div>
+          <div class="comp-bar-row"><div class="comp-yr">Łomża</div><div class="comp-track"><div class="comp-fill" style="--w:72%;width:72%;background:var(--amber)"></div></div><div class="comp-val">1,11/1k</div></div>
+          <div class="comp-bar-row"><div class="comp-yr">PL</div><div class="comp-track"><div class="comp-fill" style="--w:100%;width:100%;background:var(--text3)"></div></div><div class="comp-val">1,55/1k</div></div>
         </div>
       </div>
     </div>
@@ -910,15 +996,15 @@
       <div class="comp-row">
         <div class="comp-lbl">Egzamin 8-klasisty (J. Polski)</div>
         <div class="comp-bars">
-          <div class="comp-bar-row"><div class="comp-yr">Łomża</div><div class="comp-track"><div class="comp-fill" style="width:68%;background:var(--green)"></div></div><div class="comp-val">68%</div></div>
-          <div class="comp-bar-row"><div class="comp-yr">PL</div><div class="comp-track"><div class="comp-fill" style="width:66%;background:var(--text3)"></div></div><div class="comp-val">66%</div></div>
+          <div class="comp-bar-row"><div class="comp-yr">Łomża</div><div class="comp-track"><div class="comp-fill" style="--w:68%;width:68%;background:var(--green)"></div></div><div class="comp-val">68%</div></div>
+          <div class="comp-bar-row"><div class="comp-yr">PL</div><div class="comp-track"><div class="comp-fill" style="--w:66%;width:66%;background:var(--text3)"></div></div><div class="comp-val">66%</div></div>
         </div>
       </div>
       <div class="comp-row">
         <div class="comp-lbl">Egzamin 8-klasisty (Matematyka)</div>
         <div class="comp-bars">
-          <div class="comp-bar-row"><div class="comp-yr">Łomża</div><div class="comp-track"><div class="comp-fill" style="width:55%;background:var(--amber)"></div></div><div class="comp-val">55%</div></div>
-          <div class="comp-bar-row"><div class="comp-yr">PL</div><div class="comp-track"><div class="comp-fill" style="width:53%;background:var(--text3)"></div></div><div class="comp-val">53%</div></div>
+          <div class="comp-bar-row"><div class="comp-yr">Łomża</div><div class="comp-track"><div class="comp-fill" style="--w:55%;width:55%;background:var(--amber)"></div></div><div class="comp-val">55%</div></div>
+          <div class="comp-bar-row"><div class="comp-yr">PL</div><div class="comp-track"><div class="comp-fill" style="--w:53%;width:53%;background:var(--text3)"></div></div><div class="comp-val">53%</div></div>
         </div>
       </div>
     </div>
@@ -979,6 +1065,12 @@
       <div class="comp-row">
         <div class="comp-lbl">Koszyk żywności</div>
         <div class="comp-bars" id="food-cost-comparison">
+          <!-- JS will generate this -->
+        </div>
+      </div>
+      <div class="comp-row">
+        <div class="comp-lbl">Energia elektryczna (kWh)</div>
+        <div class="comp-bars" id="electricity-cost-comparison">
           <!-- JS will generate this -->
         </div>
       </div>
@@ -1122,3 +1214,6 @@
 
 </body>
 </html>
+
+
+

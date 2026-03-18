@@ -1,4 +1,4 @@
-const CACHE_NAME = 'lomza-dashboard-v3';
+const CACHE_NAME = 'lomza-dashboard-v4';
 const ASSETS = [
   './',
   './lomza-final.html',

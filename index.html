@@ -19,6 +19,41 @@
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@300;400;600&family=Manrope:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <link rel="stylesheet" href="style.css">
+
+<!-- JSON-LD Structured Data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "name": "Łomża — Miasto jako Firma",
+      "url": "https://lomza.pages.dev/",
+      "description": "Interaktywny dashboard finansowy miasta Łomża: budżet, dług publiczny, demografia, gospodarka i dane live z BDL GUS.",
+      "inLanguage": "pl",
+      "publisher": {
+        "@type": "Organization",
+        "name": "lomza.pages.dev"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "name": "Dashboard Finansowy Łomży",
+      "description": "Dane budżetowe, demograficzne i gospodarcze miasta Łomża. Dochody, wydatki, dług publiczny, demografia i rynek pracy.",
+      "url": "https://lomza.pages.dev/",
+      "keywords": ["Łomża", "budżet gminy", "finanse miejskie", "demografia", "rynek pracy", "dług publiczny"],
+      "license": "https://creativecommons.org/licenses/by/4.0/",
+      "creator": { "@type": "Organization", "name": "GUS — Bank Danych Lokalnych" },
+      "temporalCoverage": "2017/2025",
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Łomża",
+        "address": { "@type": "PostalAddress", "addressCountry": "PL", "addressRegion": "Podlaskie" }
+      }
+    }
+  ]
+}
+</script>
 </head>
 <body>
 
@@ -43,8 +78,22 @@
       <span id="api-label" style="color:var(--text3)">BDL API...</span>
     </div>
     <div class="data-year">Dane: 2024 + szacunki 2025</div>
+    <div class="live-pop" title="Szacunkowa liczba mieszkańców Łomży — aktualizowana w czasie rzeczywistym na podstawie rocznego ubytku GUS">
+      <div class="live-pop-dot"></div>
+      <div class="live-pop-inner">
+        <span class="live-pop-label">MIESZKAŃCY</span>
+        <span class="live-pop-val" id="live-pop-val">59&nbsp;263</span>
+      </div>
+    </div>
   </div>
 </header>
+
+<!-- SCROLL TO TOP -->
+<button class="scroll-top" id="scroll-top-btn" aria-label="Wróć na górę" title="Wróć na górę">
+  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <polyline points="18 15 12 9 6 15"/>
+  </svg>
+</button>
 
 <!-- ============================================
      TICKER
@@ -89,7 +138,8 @@
   <button class="tab-btn" data-tab="safety">06 Bezpieczeństwo</button>
   <button class="tab-btn" data-tab="education">07 Edukacja</button>
   <button class="tab-btn" data-tab="taxes">08 Podatki i Koszty</button>
-  <button class="tab-btn" data-tab="api">09 Live API</button>
+  <button class="tab-btn" data-tab="invest">09 Inwestycje</button>
+  <button class="tab-btn" data-tab="api">10 Live API</button>
 </nav>
 
 <main>
@@ -138,25 +188,25 @@
   <div class="alert-box amber mb">ℹ Dane za 2025 w BDL będą dostępne ~Q2 2026. Tam, gdzie brak pełnych danych rocznych, użyto szacunków.</div>
 
   <div class="kpi-grid mb">
-    <div class="kpi" title="Całkowite dochody budżetu miasta w danym roku.">
+    <div class="kpi" data-tooltip="Całkowite dochody budżetu miasta w danym roku.">
       <div class="kpi-top"><div class="kpi-icon">💰</div><div class="badge up">▲+17,9%</div></div>
       <div class="kpi-val" data-value="639.6" data-suffix="M">0</div>
       <div class="kpi-name">Dochody gminy</div>
       <div class="kpi-sub">vs 2024: 542,3 mln zł</div>
     </div>
-    <div class="kpi" title="Całkowite wydatki budżetu miasta w danym roku.">
+    <div class="kpi" data-tooltip="Całkowite wydatki budżetu miasta w danym roku.">
       <div class="kpi-top"><div class="kpi-icon">📤</div><div class="badge dn">▲+14,7%</div></div>
       <div class="kpi-val" data-value="651.1" data-suffix="M">0</div>
       <div class="kpi-name">Wydatki gminy</div>
       <div class="kpi-sub">vs 2024: 567,5 mln zł</div>
     </div>
-    <div class="kpi" title="Różnica między wydatkami a dochodami. Wartość ujemna oznacza deficyt.">
+    <div class="kpi" data-tooltip="Różnica między wydatkami a dochodami. Wartość ujemna oznacza deficyt.">
       <div class="kpi-top"><div class="kpi-icon">🏦</div><div class="badge dn">−11,5M</div></div>
       <div class="kpi-val" style="color:var(--red)" data-value="-11.5" data-suffix="M">0</div>
       <div class="kpi-name">Deficyt budżetowy</div>
       <div class="kpi-sub">1,8% dochodów (2025)</div>
     </div>
-    <div class="kpi" title="Łączne zobowiązania finansowe miasta (kredyty, pożyczki, obligacje).">
+    <div class="kpi" data-tooltip="Łączne zobowiązania finansowe miasta (kredyty, pożyczki, obligacje).">
       <div class="kpi-top"><div class="kpi-icon">⚠️</div><div class="badge dn">33,4%</div></div>
       <div class="kpi-val sm" style="color:var(--amber)" data-value="213.6" data-suffix="M">0</div>
       <div class="kpi-name">Dług publiczny</div>
@@ -165,37 +215,37 @@
   </div>
 
   <div class="kpi-grid kpi-grid-6 mb">
-    <div class="kpi" title="Oficjalna liczba mieszkańców zarejestrowanych w mieście.">
+    <div class="kpi" data-tooltip="Oficjalna liczba mieszkańców zarejestrowanych w mieście.">
       <div class="kpi-top"><div class="kpi-icon">👥</div><div class="badge dn">▼−1,1%</div></div>
       <div class="kpi-val sm" data-value="59263">0</div>
       <div class="kpi-name">Mieszkańców</div>
       <div class="kpi-sub">prognoza 2050: 46 082</div>
     </div>
-    <div class="kpi" title="Różnica między liczbą osób, które zameldowały się w mieście, a liczbą osób, które się wymeldowały.">
+    <div class="kpi" data-tooltip="Różnica między liczbą osób, które zameldowały się w mieście, a liczbą osób, które się wymeldowały.">
       <div class="kpi-top"><div class="kpi-icon">📉</div><div class="badge dn">−108</div></div>
       <div class="kpi-val sm" style="color:var(--red)" data-value="-108">0</div>
       <div class="kpi-name">Saldo migracji</div>
       <div class="kpi-sub">wew: −123, zagr: +15 (szac. 2025)</div>
     </div>
-    <div class="kpi" title="Stopa bezrobocia rejestrowanego dla miasta Łomża.">
+    <div class="kpi" data-tooltip="Stopa bezrobocia rejestrowanego dla miasta Łomża.">
       <div class="kpi-top"><div class="kpi-icon">💼</div><div class="badge dn">6,7%</div></div>
       <div class="kpi-val sm" style="color:var(--amber)" data-value="6.7" data-suffix="%">0</div>
       <div class="kpi-name">Bezrobocie rej.</div>
       <div class="kpi-sub">GUS miesięczne: szac. 2025</div>
     </div>
-    <div class="kpi" title="Przeciętne miesięczne wynagrodzenie brutto w sektorze przedsiębiorstw.">
+    <div class="kpi" data-tooltip="Przeciętne miesięczne wynagrodzenie brutto w sektorze przedsiębiorstw.">
       <div class="kpi-top"><div class="kpi-icon">💵</div><div class="badge am">szac. 2025</div></div>
       <div class="kpi-val sm" data-value="8520">0</div>
       <div class="kpi-name">Śr. wynagrodzenie PLN</div>
       <div class="kpi-sub">PL: 8 935–9 583 (szac. 2025)</div>
     </div>
-    <div class="kpi" title="Liczba nowo wybudowanych mieszkań w przeliczeniu na 1000 mieszkańców. Wskaźnik rozwoju budownictwa.">
+    <div class="kpi" data-tooltip="Liczba nowo wybudowanych mieszkań w przeliczeniu na 1000 mieszkańców. Wskaźnik rozwoju budownictwa.">
       <div class="kpi-top"><div class="kpi-icon">🏗️</div><div class="badge up">510 lok.</div></div>
       <div class="kpi-val sm" data-value="8.57">0</div>
       <div class="kpi-name">Nowe mieszk./1000 os.</div>
       <div class="kpi-sub">PL avg: 5,33 (▲161%)</div>
     </div>
-    <div class="kpi" title="Liczba aktywnych podmiotów gospodarczych zarejestrowanych w rejestrze REGON.">
+    <div class="kpi" data-tooltip="Liczba aktywnych podmiotów gospodarczych zarejestrowanych w rejestrze REGON.">
       <div class="kpi-top"><div class="kpi-icon">🏢</div><div class="badge up">+438</div></div>
       <div class="kpi-val sm" data-value="6853">0</div>
       <div class="kpi-name">Firm w REGON</div>
@@ -491,25 +541,25 @@
   <div class="sh">Populacja i struktura demograficzna Łomży — GUS 2024</div>
 
   <div class="kpi-grid mb">
-    <div class="kpi" title="Oficjalna liczba mieszkańców zarejestrowanych w mieście.">
+    <div class="kpi" data-tooltip="Oficjalna liczba mieszkańców zarejestrowanych w mieście.">
       <div class="kpi-top"><div class="kpi-icon">👥</div><div class="badge dn">▼−6,9% od 2002</div></div>
       <div class="kpi-val" data-value="59263">0</div>
       <div class="kpi-name">Mieszkańców 2025 (szac.)</div>
       <div class="kpi-sub">2002: 63 890 | prognoza 2050: 46 082</div>
     </div>
-    <div class="kpi" title="Różnica między liczbą urodzeń żywych a liczbą zgonów. Wartość ujemna oznacza ubytek naturalny.">
+    <div class="kpi" data-tooltip="Różnica między liczbą urodzeń żywych a liczbą zgonów. Wartość ujemna oznacza ubytek naturalny.">
       <div class="kpi-top"><div class="kpi-icon">📈</div><div class="badge dn">−104</div></div>
       <div class="kpi-val" style="color:var(--red)" data-value="-1.75" data-suffix="‰">0</div>
       <div class="kpi-name">Przyrost naturalny</div>
       <div class="kpi-sub">urodzenia: 394 | zgony: 498</div>
     </div>
-    <div class="kpi" title="Różnica między liczbą osób, które zameldowały się w mieście, a liczbą osób, które się wymeldowały.">
+    <div class="kpi" data-tooltip="Różnica między liczbą osób, które zameldowały się w mieście, a liczbą osób, które się wymeldowały.">
       <div class="kpi-top"><div class="kpi-icon">✈️</div><div class="badge dn">−108</div></div>
       <div class="kpi-val" style="color:var(--red)" data-value="-108">0</div>
       <div class="kpi-name">Saldo migracji</div>
       <div class="kpi-sub">wew: −123 | zagr.: +15 (szac. 2025)</div>
     </div>
-    <div class="kpi" title="Mediana wieku populacji miasta.">
+    <div class="kpi" data-tooltip="Mediana wieku populacji miasta.">
       <div class="kpi-top"><div class="kpi-icon">👶</div><div class="badge am">1,17</div></div>
       <div class="kpi-val" data-value="43.1">0</div>
       <div class="kpi-name">Śr. wiek mieszkańców</div>
@@ -613,6 +663,26 @@
     </div>
   </div>
 
+  <!-- POPULATION TREND CHART -->
+  <div class="sh">Trend demograficzny 2002–2025 z prognozą do 2050</div>
+  <div class="panel mb" id="pop-trend-panel">
+    <div class="panel-title">
+      <h3 id="pop-trend-title">Liczba mieszkańców — historia i prognoza GUS</h3>
+      <div class="chart-toggle-wrapper">
+        <button class="chart-toggle-btn active" id="pop-view-all">Pełny zakres</button>
+        <button class="chart-toggle-btn" id="pop-view-hist">Historia (2002–2025)</button>
+        <button class="chart-toggle-btn" id="pop-view-proj">Prognoza (2025–2050)</button>
+      </div>
+    </div>
+    <div id="pop-trend-chart" style="width:100%;height:220px;position:relative;"></div>
+    <div class="pop-chart-legend">
+      <div class="chart-legend-item"><div class="cl-dot" style="background:var(--blue)"></div>Dane historyczne GUS</div>
+      <div class="chart-legend-item"><div class="cl-dot" style="background:var(--amber);opacity:.7;"></div>Prognoza GUS (szacunek)</div>
+      <div class="chart-legend-item"><div style="width:10px;height:2px;background:var(--border2);border-radius:1px;margin-right:4px;border-top:1px dashed var(--border2);"></div>Granica prognozy (2025)</div>
+    </div>
+    <div class="pop-chart-annotations" id="pop-annotations"></div>
+  </div>
+
 </section>
 
 <!-- ============================================
@@ -622,25 +692,25 @@
   <div class="sh">Rynek pracy i gospodarka — Łomża 2025 (szacunki)</div>
 
   <div class="kpi-grid mb">
-    <div class="kpi" title="Stopa bezrobocia rejestrowanego dla miasta Łomża.">
+    <div class="kpi" data-tooltip="Stopa bezrobocia rejestrowanego dla miasta Łomża.">
       <div class="kpi-top"><div class="kpi-icon">💼</div><div class="badge dn">vs PL 5,1%</div></div>
       <div class="kpi-val" style="color:var(--amber)" data-value="6.7" data-suffix="%">0</div>
       <div class="kpi-name">Stopa bezrobocia rej.</div>
       <div class="kpi-sub">k: 7,6% | m: 6,1%</div>
     </div>
-    <div class="kpi" title="Przeciętne miesięczne wynagrodzenie brutto w sektorze przedsiębiorstw.">
+    <div class="kpi" data-tooltip="Przeciętne miesięczne wynagrodzenie brutto w sektorze przedsiębiorstw.">
       <div class="kpi-top"><div class="kpi-icon">💰</div><div class="badge am">szac. 2025</div></div>
       <div class="kpi-val" data-value="8520">0</div>
       <div class="kpi-name">Wynagrodzenie brutto PLN</div>
       <div class="kpi-sub">PL: 8 935–9 583 (szac. 2025)</div>
     </div>
-    <div class="kpi" title="Liczba osób pracujących w podmiotach gospodarki narodowej.">
+    <div class="kpi" data-tooltip="Liczba osób pracujących w podmiotach gospodarki narodowej.">
       <div class="kpi-top"><div class="kpi-icon">👷</div><div class="badge up">245/1000</div></div>
       <div class="kpi-val" data-value="16300">0</div>
       <div class="kpi-name">Pracujących ogółem</div>
       <div class="kpi-sub">kobiety: 55,1% | dane 2021</div>
     </div>
-    <div class="kpi" title="Liczba aktywnych podmiotów gospodarczych zarejestrowanych w rejestrze REGON.">
+    <div class="kpi" data-tooltip="Liczba aktywnych podmiotów gospodarczych zarejestrowanych w rejestrze REGON.">
       <div class="kpi-top"><div class="kpi-icon">🏢</div><div class="badge up">+95 net</div></div>
       <div class="kpi-val" data-value="6853">0</div>
       <div class="kpi-name">Podmiotów REGON</div>
@@ -748,25 +818,25 @@
   <div class="sh">Rynek nieruchomości i budownictwo — aktualizacja 2025</div>
 
   <div class="kpi-grid mb">
-    <div class="kpi" title="Liczba mieszkań oddanych do użytkowania w danym roku.">
+    <div class="kpi" data-tooltip="Liczba mieszkań oddanych do użytkowania w danym roku.">
       <div class="kpi-top"><div class="kpi-icon">🏗️</div><div class="badge up">▲ PL avg 5,33</div></div>
       <div class="kpi-val" style="color:var(--green)" data-value="510">0</div>
       <div class="kpi-name">Nowych mieszkań 2024</div>
       <div class="kpi-sub">8,57 / 1000 mieszkańców (▲161% nad PL)</div>
     </div>
-    <div class="kpi" title="Średnia cena transakcyjna za metr kwadratowy lokalu mieszkalnego.">
+    <div class="kpi" data-tooltip="Średnia cena transakcyjna za metr kwadratowy lokalu mieszkalnego.">
       <div class="kpi-top"><div class="kpi-icon">💲</div><div class="badge dn">NBP Q3 2025</div></div>
       <div class="kpi-val" data-value="8100">0</div>
       <div class="kpi-name">Mediana ceny zł/m²</div>
       <div class="kpi-sub">szacunek: ~8 100 zł/m² (NBP, kw. 3/2025)</div>
     </div>
-    <div class="kpi" title="Całkowita liczba lokali mieszkalnych w mieście.">
+    <div class="kpi" data-tooltip="Całkowita liczba lokali mieszkalnych w mieście.">
       <div class="kpi-top"><div class="kpi-icon">🏠</div><div class="badge up">440/1000</div></div>
       <div class="kpi-val" data-value="26087">0</div>
       <div class="kpi-name">Zasoby mieszkaniowe</div>
       <div class="kpi-sub">śr. pow.: 66,5 m² | 2,27 os./lokal</div>
     </div>
-    <div class="kpi" title="Średnia powierzchnia użytkowa nowo oddanego mieszkania.">
+    <div class="kpi" data-tooltip="Średnia powierzchnia użytkowa nowo oddanego mieszkania.">
       <div class="kpi-top"><div class="kpi-icon">📋</div><div class="badge am">596 transakcji</div></div>
       <div class="kpi-val" data-value="68" data-suffix=" m²">0</div>
       <div class="kpi-name">Śr. pow. nowego lokalu</div>
@@ -836,12 +906,12 @@
   <div class="panel mb">
     <div class="panel-title"><h3>Instalacje i standardy zamieszkania</h3><span class="src">GUS 2024</span></div>
     <div class="kpi-grid kpi-grid-6">
-      <div class="kpi" title="Procent mieszkań podłączonych do sieci wodociągowej."><div class="kpi-val" data-value="99.5" data-suffix="%">0</div><div class="kpi-name">Wodociąg</div><div class="kpi-sub">PL: 97,8%</div></div>
-      <div class="kpi" title="Procent mieszkań wyposażonych w toaletę ze spłuczką."><div class="kpi-val" data-value="99.1" data-suffix="%">0</div><div class="kpi-name">Ustęp spłukiwany</div><div class="kpi-sub">PL: 95,3%</div></div>
-      <div class="kpi" title="Procent mieszkań wyposażonych w łazienkę."><div class="kpi-val" data-value="98.4" data-suffix="%">0</div><div class="kpi-name">Łazienka</div><div class="kpi-sub">PL: 93,9%</div></div>
-      <div class="kpi" title="Procent mieszkań z centralnym ogrzewaniem."><div class="kpi-val" data-value="92.5" data-suffix="%">0</div><div class="kpi-name">C.O.</div><div class="kpi-sub">PL: 86,2%</div></div>
-      <div class="kpi" title="Procent mieszkań podłączonych do sieci gazowej."><div class="kpi-val" data-value="25.0" data-suffix="%">0</div><div class="kpi-name">Gaz sieciowy</div><div class="kpi-sub">PL: 59,1%</div></div>
-      <div class="kpi" title="Średnia liczba izb w jednym mieszkaniu."><div class="kpi-val" data-value="3.79">0</div><div class="kpi-name">Izb / mieszkanie</div><div class="kpi-sub">PL: 3,83</div></div>
+      <div class="kpi" data-tooltip="Procent mieszkań podłączonych do sieci wodociągowej."><div class="kpi-val" data-value="99.5" data-suffix="%">0</div><div class="kpi-name">Wodociąg</div><div class="kpi-sub">PL: 97,8%</div></div>
+      <div class="kpi" data-tooltip="Procent mieszkań wyposażonych w toaletę ze spłuczką."><div class="kpi-val" data-value="99.1" data-suffix="%">0</div><div class="kpi-name">Ustęp spłukiwany</div><div class="kpi-sub">PL: 95,3%</div></div>
+      <div class="kpi" data-tooltip="Procent mieszkań wyposażonych w łazienkę."><div class="kpi-val" data-value="98.4" data-suffix="%">0</div><div class="kpi-name">Łazienka</div><div class="kpi-sub">PL: 93,9%</div></div>
+      <div class="kpi" data-tooltip="Procent mieszkań z centralnym ogrzewaniem."><div class="kpi-val" data-value="92.5" data-suffix="%">0</div><div class="kpi-name">C.O.</div><div class="kpi-sub">PL: 86,2%</div></div>
+      <div class="kpi" data-tooltip="Procent mieszkań podłączonych do sieci gazowej."><div class="kpi-val" data-value="25.0" data-suffix="%">0</div><div class="kpi-name">Gaz sieciowy</div><div class="kpi-sub">PL: 59,1%</div></div>
+      <div class="kpi" data-tooltip="Średnia liczba izb w jednym mieszkaniu."><div class="kpi-val" data-value="3.79">0</div><div class="kpi-name">Izb / mieszkanie</div><div class="kpi-sub">PL: 3,83</div></div>
     </div>
   </div>
 
@@ -854,25 +924,25 @@
   <div class="sh">Bezpieczeństwo publiczne i przestępczość — GUS 2024</div>
 
   <div class="kpi-grid mb">
-    <div class="kpi" title="Liczba stwierdzonych przestępstw w przeliczeniu na 1000 mieszkańców. Wskaźnik bezpieczeństwa.">
+    <div class="kpi" data-tooltip="Liczba stwierdzonych przestępstw w przeliczeniu na 1000 mieszkańców. Wskaźnik bezpieczeństwa.">
       <div class="kpi-top"><div class="kpi-icon">🚔</div><div class="badge up">vs PL 20,57</div></div>
       <div class="kpi-val" style="color:var(--green)" data-value="14.04">0</div>
       <div class="kpi-name">Przestępstw / 1000 os.</div>
       <div class="kpi-sub">łącznie: 835 | PL avg: 20,57</div>
     </div>
-    <div class="kpi" title="Procent postępowań, w których wykryto podejrzanego.">
+    <div class="kpi" data-tooltip="Procent postępowań, w których wykryto podejrzanego.">
       <div class="kpi-top"><div class="kpi-icon">🔍</div><div class="badge am">66%</div></div>
       <div class="kpi-val" data-value="66" data-suffix="%">0</div>
       <div class="kpi-name">Wykrywalność sprawców</div>
       <div class="kpi-sub">PL avg: 70% | Pod.: 74%</div>
     </div>
-    <div class="kpi" title="Liczba przestępstw o charakterze gospodarczym na 1000 mieszkańców.">
+    <div class="kpi" data-tooltip="Liczba przestępstw o charakterze gospodarczym na 1000 mieszkańców.">
       <div class="kpi-top"><div class="kpi-icon">💰</div><div class="badge dn">vs PL 6,38</div></div>
       <div class="kpi-val" data-value="3.03">0</div>
       <div class="kpi-name">Przestępstwa gosp./1000</div>
       <div class="kpi-sub">łącznie: 180 | wykr.: 53%</div>
     </div>
-    <div class="kpi" title="Liczba przestępstw przeciwko życiu i zdrowiu na 1000 mieszkańców.">
+    <div class="kpi" data-tooltip="Liczba przestępstw przeciwko życiu i zdrowiu na 1000 mieszkańców.">
       <div class="kpi-top"><div class="kpi-icon">🩺</div><div class="badge up">vs PL 0,35</div></div>
       <div class="kpi-val" data-value="0.45">0</div>
       <div class="kpi-name">Przest. vs życie/1000</div>
@@ -950,25 +1020,25 @@
   <div class="sh">Oświata i Edukacja — Łomża 2024</div>
 
   <div class="kpi-grid mb">
-    <div class="kpi" title="Całkowite wydatki miasta na oświatę i wychowanie.">
+    <div class="kpi" data-tooltip="Całkowite wydatki miasta na oświatę i wychowanie.">
       <div class="kpi-top"><div class="kpi-icon">🎓</div><div class="badge dn">49,9% budżetu</div></div>
       <div class="kpi-val" data-value="283.1" data-suffix="M">0</div>
       <div class="kpi-name">Wydatki na oświatę</div>
       <div class="kpi-sub">Największa pozycja w budżecie</div>
     </div>
-    <div class="kpi" title="Szacunkowa liczba dzieci i młodzieży w placówkach oświatowych na terenie miasta.">
+    <div class="kpi" data-tooltip="Szacunkowa liczba dzieci i młodzieży w placówkach oświatowych na terenie miasta.">
       <div class="kpi-top"><div class="kpi-icon">🏫</div><div class="badge am">~11 tys.</div></div>
       <div class="kpi-val" data-value="11000" data-prefix="~">0</div>
       <div class="kpi-name">Uczniów i przedszkolaków</div>
       <div class="kpi-sub">Szacunek na podst. demografii</div>
     </div>
-    <div class="kpi" title="Kwota, którą miasto musi dołożyć do oświaty z własnych dochodów, ponieważ subwencja państwowa jest niewystarczająca.">
+    <div class="kpi" data-tooltip="Kwota, którą miasto musi dołożyć do oświaty z własnych dochodów, ponieważ subwencja państwowa jest niewystarczająca.">
       <div class="kpi-top"><div class="kpi-icon">💸</div><div class="badge dn">Dopłata miasta</div></div>
       <div class="kpi-val" style="color:var(--red)" data-value="108" data-prefix="~" data-suffix="M">0</div>
       <div class="kpi-name">Luka oświatowa</div>
       <div class="kpi-sub">Wydatki minus subwencja</div>
     </div>
-    <div class="kpi" title="Szacunkowa liczba nauczycieli zatrudnionych w placówkach oświatowych w przeliczeniu na pełne etaty.">
+    <div class="kpi" data-tooltip="Szacunkowa liczba nauczycieli zatrudnionych w placówkach oświatowych w przeliczeniu na pełne etaty.">
       <div class="kpi-top"><div class="kpi-icon">👩‍🏫</div><div class="badge up">~1 800</div></div>
       <div class="kpi-val" data-value="1800" data-prefix="~">0</div>
       <div class="kpi-name">Nauczycieli (etaty)</div>
@@ -1031,19 +1101,19 @@
     <div class="panel">
       <div class="panel-title"><h3>Obciążenia podatkowe i składki (ogólnokrajowe)</h3><span class="src">gov.pl / ZUS 2024</span></div>
       <div class="kpi-grid" style="grid-template-columns: 1fr 1fr; gap: 0.75rem;">
-        <div class="kpi" title="Podstawowa stawka podatku dochodowego od osób fizycznych.">
+        <div class="kpi" data-tooltip="Podstawowa stawka podatku dochodowego od osób fizycznych.">
           <div class="kpi-val sm" data-value="12" data-suffix="%">0</div>
           <div class="kpi-name">PIT (I próg)</div>
         </div>
-        <div class="kpi" title="Stawka podatku dochodowego dla dochodów powyżej 120 000 zł.">
+        <div class="kpi" data-tooltip="Stawka podatku dochodowego dla dochodów powyżej 120 000 zł.">
           <div class="kpi-val sm" data-value="32" data-suffix="%">0</div>
           <div class="kpi-name">PIT (II próg)</div>
         </div>
-        <div class="kpi" title="Podstawowa stawka podatku dochodowego od osób prawnych.">
+        <div class="kpi" data-tooltip="Podstawowa stawka podatku dochodowego od osób prawnych.">
           <div class="kpi-val sm" data-value="19" data-suffix="%">0</div>
           <div class="kpi-name">CIT (standardowy)</div>
         </div>
-        <div class="kpi" title="Obniżona stawka CIT dla małych podatników.">
+        <div class="kpi" data-tooltip="Obniżona stawka CIT dla małych podatników.">
           <div class="kpi-val sm" data-value="9" data-suffix="%">0</div>
           <div class="kpi-name">CIT (obniżony)</div>
         </div>
@@ -1080,6 +1150,129 @@
         </div>
       </div>
     </div>
+  </div>
+
+  <!-- TAX CALCULATOR -->
+  <div class="sh">Kalkulator podatkowy dla przedsiębiorcy</div>
+  <div class="panel mb" id="tax-calculator-panel">
+    <div class="panel-title">
+      <h3>Ile zostaje Ci "na rękę"?</h3>
+      <span class="src">Dane szacunkowe</span>
+    </div>
+    <div class="alert-box blue" style="margin-bottom:1.25rem">
+      ℹ Kalkulator pokazuje orientacyjne obciążenia. Wynik zależy od indywidualnej sytuacji — skonsultuj z księgowym.
+    </div>
+
+    <div class="tax-calc-grid">
+      <!-- INPUTS -->
+      <div class="tax-inputs">
+        <div class="tax-field">
+          <label for="tc-revenue">Miesięczny przychód brutto (zł)</label>
+          <input type="number" id="tc-revenue" class="tax-input" value="15000" min="0" step="500" placeholder="np. 15000">
+        </div>
+        <div class="tax-field">
+          <label for="tc-costs">Koszty uzyskania przychodu (zł/mc)</label>
+          <input type="number" id="tc-costs" class="tax-input" value="3000" min="0" step="100" placeholder="np. 3000">
+        </div>
+        <div class="tax-field">
+          <label for="tc-form">Forma opodatkowania</label>
+          <select id="tc-form" class="tax-select">
+            <option value="skala">Skala podatkowa (12% / 32%)</option>
+            <option value="liniowy">Podatek liniowy (19%)</option>
+            <option value="ryczalt9">Ryczałt 9% (usługi IT/techniczne)</option>
+            <option value="ryczalt12">Ryczałt 12% (wolne zawody)</option>
+            <option value="ryczalt15">Ryczałt 15% (usługi)</option>
+          </select>
+        </div>
+        <div class="tax-field">
+          <label for="tc-type">Typ przedsiębiorcy</label>
+          <select id="tc-type" class="tax-select">
+            <option value="jdg">JDG — Jednoosobowa działalność</option>
+            <option value="sp">Spółka (CIT 19%)</option>
+            <option value="sp_maly">Mała spółka (CIT 9%)</option>
+          </select>
+        </div>
+        <div class="tax-field">
+          <label>
+            <input type="checkbox" id="tc-zus-preferencyjny"> Preferencyjny ZUS (pierwsze 24 mc)
+          </label>
+        </div>
+        <button class="tax-calc-btn" id="tc-calculate">▶ OBLICZ</button>
+      </div>
+
+      <!-- RESULTS -->
+      <div class="tax-results" id="tax-results">
+        <div class="tax-result-placeholder">
+          <div style="font-size:2rem;margin-bottom:.75rem">🧮</div>
+          <div style="color:var(--text3);font-family:'JetBrains Mono',monospace;font-size:.85rem">Wprowadź dane i kliknij OBLICZ</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- ============================================
+     TAB 9: INWESTYCJE
+     ============================================ -->
+<section class="tab-panel" id="tab-invest">
+  <div class="sh">Inwestycje Miejskie — Łomża 2024–2026</div>
+
+  <div class="kpi-grid mb">
+    <div class="kpi" data-tooltip="Łączna wartość inwestycji w budżecie 2025.">
+      <div class="kpi-top"><div class="kpi-icon">🏗️</div><div class="badge up">2025</div></div>
+      <div class="kpi-val sm" data-value="50.9" data-suffix="M">0</div>
+      <div class="kpi-name">Wydatki inwestycyjne</div>
+      <div class="kpi-sub">7,8% budżetu ogółem</div>
+    </div>
+    <div class="kpi" data-tooltip="Udział środków unijnych w finansowaniu inwestycji.">
+      <div class="kpi-top"><div class="kpi-icon">🇪🇺</div><div class="badge bl">UE</div></div>
+      <div class="kpi-val sm" data-value="28.4" data-suffix="M">0</div>
+      <div class="kpi-name">Środki zewnętrzne (UE+)</div>
+      <div class="kpi-sub">~55% inwestycji z dofinansowania</div>
+    </div>
+    <div class="kpi" data-tooltip="Liczba aktywnych projektów inwestycyjnych w realizacji.">
+      <div class="kpi-top"><div class="kpi-icon">📋</div><div class="badge am">aktywne</div></div>
+      <div class="kpi-val sm" data-value="24">0</div>
+      <div class="kpi-name">Projekty w realizacji</div>
+      <div class="kpi-sub">planowane + w toku 2025</div>
+    </div>
+    <div class="kpi" data-tooltip="Inwestycje zakończone w 2024 roku.">
+      <div class="kpi-top"><div class="kpi-icon">✅</div><div class="badge up">2024</div></div>
+      <div class="kpi-val sm" data-value="18">0</div>
+      <div class="kpi-name">Ukończone w 2024</div>
+      <div class="kpi-sub">zrealizowane projekty</div>
+    </div>
+  </div>
+
+  <!-- Filter bar -->
+  <div class="invest-filter-bar mb">
+    <span class="invest-filter-label">Filtruj:</span>
+    <button class="invest-filter-btn active" data-filter="all">Wszystkie</button>
+    <button class="invest-filter-btn" data-filter="drogi">🛣️ Drogi</button>
+    <button class="invest-filter-btn" data-filter="sport">⚽ Sport & Rekreacja</button>
+    <button class="invest-filter-btn" data-filter="edukacja">🏫 Edukacja</button>
+    <button class="invest-filter-btn" data-filter="srodowisko">🌿 Środowisko</button>
+    <button class="invest-filter-btn" data-filter="kultura">🎭 Kultura</button>
+    <button class="invest-filter-btn" data-filter="infrastruktura">🔧 Infrastruktura</button>
+  </div>
+
+  <!-- Investment cards -->
+  <div class="invest-grid mb" id="invest-grid">
+    <!-- JS generated -->
+  </div>
+
+  <!-- Timeline -->
+  <div class="sh">Harmonogram realizacji (WPF 2024–2026)</div>
+  <div class="panel mb">
+    <div class="panel-title"><h3>Główne projekty według roku realizacji</h3><span class="src">WPF Łomża 2024</span></div>
+    <div class="invest-timeline" id="invest-timeline">
+      <!-- JS generated -->
+    </div>
+  </div>
+
+  <div class="alert-box amber mb">
+    ℹ Dane o inwestycjach pochodzą z Wieloletniej Prognozy Finansowej (WPF) i uchwał budżetowych Rady Miejskiej Łomży. Kwoty i terminy mogą ulec zmianie. Pełna lista: <a href="https://www.lomza.pl/bip/" target="_blank" style="color:var(--amber)">BIP UM Łomża</a>.
   </div>
 </section>
 

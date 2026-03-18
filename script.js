@@ -1,4 +1,4 @@
-﻿﻿/* -----------------------------------------------
+/* -----------------------------------------------
    STATIC DATA — Łomża (GUS / BIP / 4lomza.pl)
    ----------------------------------------------- */
 const CITY = {
@@ -74,13 +74,32 @@ const CITY = {
 /* -----------------------------------------------
    TABS
    ----------------------------------------------- */
+const TAB_TITLES = {
+  overview:      '01 Przegląd',
+  budget:        '02 Budżet & Dług',
+  demo:          '03 Demografia',
+  economy:       '04 Gospodarka',
+  housing:       '05 Budownictwo',
+  safety:        '06 Bezpieczeństwo',
+  education:     '07 Edukacja',
+  taxes:         '08 Podatki i Koszty',
+  invest:        '09 Inwestycje',
+  api:           '10 Live API',
+};
+const TITLE_BASE = 'Łomża — Miasto jako Firma';
+
 document.querySelectorAll('.tab-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
     document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
     btn.classList.add('active');
-    document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+    const panel = document.getElementById('tab-' + btn.dataset.tab);
+    panel.classList.add('active');
     history.replaceState(null, '', `#${btn.dataset.tab}`);
+    const label = TAB_TITLES[btn.dataset.tab];
+    document.title = label ? `${TITLE_BASE} | ${label}` : TITLE_BASE;
+    // Animuj liczniki w nowo otwartej zakładce
+    setTimeout(() => animateCountersInPanel(panel), 50);
   });
 });
 
@@ -94,8 +113,10 @@ function activateTabFromHash() {
   document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
   targetBtn.classList.add('active');
   targetPanel.classList.add('active');
+  setTimeout(() => animateCountersInPanel(targetPanel), 80);
 }
 window.addEventListener('hashchange', activateTabFromHash);
+window.addEventListener('popstate', activateTabFromHash);
 
 let historyChartMode = 'absolute'; // 'absolute' or 'perCapita'
 let historyChartType = 'combo'; // 'combo' | 'line' | 'bar'
@@ -457,24 +478,35 @@ function exportChartPNG(containerId, filename) {
   if (!container) return;
   const svg = container.querySelector('svg');
   if (!svg) return;
+
+  // Pobierz wymiary z viewBox (img.width/height może zwracać 0 dla SVG bez atrybutów width/height)
+  const vb = svg.viewBox.baseVal;
+  const exportW = (vb && vb.width > 0) ? vb.width : (svg.getAttribute('width') ? parseInt(svg.getAttribute('width')) : 1200);
+  const exportH = (vb && vb.height > 0) ? vb.height : (svg.getAttribute('height') ? parseInt(svg.getAttribute('height')) : 400);
+
   const serializer = new XMLSerializer();
-  const raw = serializer.serializeToString(svg);
+  // Dodaj jawne atrybuty width/height do kopii SVG, żeby canvas wiedział rozmiar
+  const svgClone = svg.cloneNode(true);
+  svgClone.setAttribute('width', exportW);
+  svgClone.setAttribute('height', exportH);
+  const raw = serializer.serializeToString(svgClone);
   const blob = new Blob([raw], { type: 'image/svg+xml;charset=utf-8' });
   const url = URL.createObjectURL(blob);
   const img = new Image();
   img.onload = () => {
     const canvas = document.createElement('canvas');
-    canvas.width = img.width || 1200;
-    canvas.height = img.height || 400;
+    canvas.width = exportW;
+    canvas.height = exportH;
     const ctx = canvas.getContext('2d');
-    ctx.fillStyle = '#0e1320';
+    ctx.fillStyle = '#18202d';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
-    ctx.drawImage(img, 0, 0);
+    ctx.drawImage(img, 0, 0, exportW, exportH);
     canvas.toBlob((pngBlob) => {
       if (pngBlob) downloadBlob(filename, pngBlob);
       URL.revokeObjectURL(url);
     }, 'image/png');
   };
+  img.onerror = () => URL.revokeObjectURL(url);
   img.src = url;
 }
 
@@ -1013,7 +1045,62 @@ document.querySelectorAll('.bar-fill, .comp-fill, .chart-bar-fill').forEach(el =
 });
 
 /* -----------------------------------------------
-   COUNTER ANIMATION on load
+   LIVE POPULATION COUNTER
+   Łomża traci ~212 mieszkańców rocznie (GUS trend 2017-2024).
+   Symulujemy ubytek w czasie rzeczywistym od 1 stycznia 2025.
+   ----------------------------------------------- */
+function initLivePopulation() {
+  const el = document.getElementById('live-pop-val');
+  if (!el) return;
+
+  // Punkt startowy: 59 476 (GUS 2024), ubytek ~212/rok
+  const BASE_POP     = 59476;
+  const LOSS_PER_YEAR = 213;        // os./rok (trend 2017–2024)
+  const START_DATE   = new Date('2025-01-01T00:00:00');
+  const MS_PER_YEAR  = 365.25 * 24 * 3600 * 1000;
+  const MS_PER_PERSON = MS_PER_YEAR / LOSS_PER_YEAR;  // ~co ile ms ginie 1 os.
+
+  function formatPop(n) {
+    // Formatowanie z twardą spacją jako separatorem tysięcy
+    return Math.round(n).toLocaleString('pl-PL').replace(/\u00a0/g, '\u00a0');
+  }
+
+  function update() {
+    const elapsed = Date.now() - START_DATE.getTime();
+    const lost    = elapsed / MS_PER_PERSON;
+    const current = BASE_POP - lost;
+    el.textContent = formatPop(current);
+  }
+
+  update();
+  // Odświeżaj co 1s — przy 213 osobach / rok zmiana następuje co ~40 minut,
+  // ale animacja musi "zmierzać" do kolejnej wartości płynnie
+  // Robimy gęstsze odświeżanie żeby counter wyglądał żywo
+  setInterval(update, 1000);
+}
+
+/* -----------------------------------------------
+   SCROLL TO TOP
+   ----------------------------------------------- */
+function initScrollTop() {
+  const btn = document.getElementById('scroll-top-btn');
+  if (!btn) return;
+
+  // Pokaż/ukryj po przewinięciu > 320px
+  const onScroll = () => {
+    btn.classList.toggle('visible', window.scrollY > 320);
+  };
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  btn.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+}
+
+/* -----------------------------------------------
+   COUNTER ANIMATION — niezawodna wersja
+   Animuje liczniki w aktywnej zakładce od razu,
+   a w pozostałych zakładkach przy ich otwarciu.
    ----------------------------------------------- */
 function animateValue(el, start, end, duration, suffix = '', prefix = '') {
   const range = end - start;
@@ -1039,19 +1126,15 @@ function animateValue(el, start, end, duration, suffix = '', prefix = '') {
   requestAnimationFrame(update);
 }
 
-const counterObserver = new IntersectionObserver((entries, observer) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      const el = entry.target;
-      const end = parseFloat(el.dataset.value);
-      const suffix = el.dataset.suffix || '';
-      const prefix = el.dataset.prefix || '';
-      
-      animateValue(el, 0, end, 1500, suffix, prefix);
-      observer.unobserve(el);
-    }
+function animateCountersInPanel(panel) {
+  panel.querySelectorAll('.kpi-val[data-value], .vcard-val[data-value]').forEach(el => {
+    if (el.dataset.animated) return;   // nie animuj drugi raz
+    el.dataset.animated = '1';
+    const end = parseFloat(el.dataset.value);
+    if (isNaN(end)) return;
+    animateValue(el, 0, end, 1400, el.dataset.suffix || '', el.dataset.prefix || '');
   });
-}, { threshold: 0.5 });
+}
 
 /* -----------------------------------------------
    INIT
@@ -1060,13 +1143,19 @@ window.addEventListener('DOMContentLoaded', async () => {
   await loadSourcesConfig();
   activateTabFromHash();
   liveDataUI.init();
-  renderHistoryChart(); // Initial render
+  initLivePopulation();
+  initScrollTop();
+  renderHistoryChart();
   renderDebtChart();
+  renderPopTrendChart();
   setProportionalCardHeights();
   renderManagementVerdict();
   renderBusinessVerdict();
   renderCostComparisons();
   addLastUpdateLabels();
+  initCityCompare();
+  initTaxCalc();
+  initInvestments();
   window.addEventListener('resize', setProportionalCardHeights);
   fetchBDLData({ silent: true, useCache: true });
 
@@ -1209,12 +1298,24 @@ window.addEventListener('DOMContentLoaded', async () => {
     });
   }
 
-  // Animate KPI values with counters
-  document.querySelectorAll('.kpi-val[data-value], .vcard-val[data-value]').forEach(el => {
-    counterObserver.observe(el);
-  });
+  // Animuj liczniki w pierwszej aktywnej zakładce
+  const activePanel = document.querySelector('.tab-panel.active');
+  if (activePanel) setTimeout(() => animateCountersInPanel(activePanel), 80);
 
   renderCitizenImpact();
+
+  // Tooltip edge detection — tt-left/tt-right dla kart przy krawędzi ekranu
+  function fixTooltipEdges() {
+    document.querySelectorAll('[data-tooltip]').forEach(el => {
+      el.classList.remove('tt-left', 'tt-right');
+      const rect = el.getBoundingClientRect();
+      const mid = rect.left + rect.width / 2;
+      if (mid < 160) el.classList.add('tt-left');
+      else if (mid > window.innerWidth - 160) el.classList.add('tt-right');
+    });
+  }
+  fixTooltipEdges();
+  window.addEventListener('resize', fixTooltipEdges);
 
   // Animate KPI values on first tab
   setTimeout(() => {
@@ -1224,3 +1325,570 @@ window.addEventListener('DOMContentLoaded', async () => {
     });
   }, 100);
 });
+
+/* -----------------------------------------------
+   TAX CALCULATOR
+   ----------------------------------------------- */
+(function () {
+  function pln(v) {
+    return v.toLocaleString('pl-PL', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' zł';
+  }
+
+  function calcTax(revenue, costs, form, type, prefZUS) {
+    // ZUS składki (2025 szacunek)
+    const zusFullSocial   = 1600.32;  // bez chorobowego
+    const zusPref         = 331.26;   // preferencyjny
+    const zusChorobowe    = 105.21;
+
+    const socialZUS  = prefZUS ? zusPref : zusFullSocial;
+    const totalZUS   = socialZUS + zusChorobowe; // łącznie z chorobowym
+
+    let pit = 0, cit = 0, healthContrib = 0, taxName = '';
+
+    if (type === 'jdg') {
+      const dochod = Math.max(0, revenue - costs - totalZUS);
+
+      if (form === 'skala') {
+        taxName = 'PIT skala (12%/32%)';
+        // Kwota wolna ~3600 zł/rok → 300/mc
+        const podstawa = Math.max(0, dochod - 300);
+        if (podstawa <= 10000) {
+          pit = podstawa * 0.12;
+        } else {
+          pit = 10000 * 0.12 + (podstawa - 10000) * 0.32;
+        }
+        // Składka zdrowotna: 9% dochodu (skala)
+        healthContrib = dochod * 0.09;
+      } else if (form === 'liniowy') {
+        taxName = 'PIT liniowy (19%)';
+        pit = Math.max(0, dochod) * 0.19;
+        // Składka zdrowotna: 4.9% dochodu (liniowy)
+        healthContrib = Math.max(381.81, dochod * 0.049);
+      } else if (form === 'ryczalt9') {
+        taxName = 'Ryczałt 9%';
+        pit = revenue * 0.09;
+        // Składka zdrowotna ryczałt: zależy od przychodu
+        healthContrib = revenue <= 60000/12 ? 381.81 : revenue <= 300000/12 ? 635.35 : 1143.62;
+      } else if (form === 'ryczalt12') {
+        taxName = 'Ryczałt 12%';
+        pit = revenue * 0.12;
+        healthContrib = revenue <= 60000/12 ? 381.81 : revenue <= 300000/12 ? 635.35 : 1143.62;
+      } else if (form === 'ryczalt15') {
+        taxName = 'Ryczałt 15%';
+        pit = revenue * 0.15;
+        healthContrib = revenue <= 60000/12 ? 381.81 : revenue <= 300000/12 ? 635.35 : 1143.62;
+      }
+
+      const totalBurden = pit + healthContrib + totalZUS + costs;
+      const takeHome    = revenue - totalBurden;
+      const effRate     = revenue > 0 ? ((revenue - takeHome) / revenue * 100) : 0;
+
+      return {
+        type: 'JDG',
+        taxName,
+        rows: [
+          { label: 'Przychód miesięczny',           val: pln(revenue),       cls: '' },
+          { label: '– Koszty uzyskania',             val: '–' + pln(costs),   cls: 'neg' },
+          { label: '– ZUS społeczne + chorobowe',    val: '–' + pln(totalZUS),cls: 'neg' },
+          { label: `– ${taxName}`,                   val: '–' + pln(pit),     cls: 'neg' },
+          { label: '– Składka zdrowotna (NFZ)',       val: '–' + pln(healthContrib), cls: 'neg' },
+        ],
+        takeHome: Math.max(0, takeHome),
+        effRate
+      };
+
+    } else {
+      // Spółka — CIT
+      const citRate = type === 'sp_maly' ? 0.09 : 0.19;
+      taxName = type === 'sp_maly' ? 'CIT 9% (mała spółka)' : 'CIT 19%';
+      const dochod = Math.max(0, revenue - costs);
+      cit = dochod * citRate;
+      const zysk  = dochod - cit;
+      // Dywidenda: 19% podatku od dywidendy
+      const dywidendaTax = zysk * 0.19;
+      const takeHome = zysk - dywidendaTax;
+      const effRate  = revenue > 0 ? ((revenue - takeHome) / revenue * 100) : 0;
+
+      return {
+        type: 'Spółka',
+        taxName,
+        rows: [
+          { label: 'Przychód miesięczny',      val: pln(revenue),         cls: '' },
+          { label: '– Koszty uzyskania',        val: '–' + pln(costs),     cls: 'neg' },
+          { label: `– ${taxName}`,              val: '–' + pln(cit),       cls: 'neg' },
+          { label: 'Zysk netto spółki',         val: pln(zysk),            cls: 'amb' },
+          { label: '– Podatek od dywidendy 19%',val: '–' + pln(dywidendaTax), cls: 'neg' },
+        ],
+        takeHome: Math.max(0, takeHome),
+        effRate
+      };
+    }
+  }
+
+  function renderResults(result) {
+    const el = document.getElementById('tax-results');
+    if (!el) return;
+    const rows = result.rows.map(r =>
+      `<div class="tax-res-row">
+        <span class="tax-res-label">${r.label}</span>
+        <span class="tax-res-val ${r.cls}">${r.val}</span>
+      </div>`
+    ).join('');
+
+    el.innerHTML = `
+      <div class="tax-res-title">${result.type} — ${result.taxName}</div>
+      ${rows}
+      <div class="tax-res-divider"></div>
+      <div class="tax-res-takehome">
+        <span class="tax-res-takehome-label">Na rękę miesięcznie</span>
+        <span class="tax-res-takehome-val">${result.takeHome.toLocaleString('pl-PL', {maximumFractionDigits: 0})} zł</span>
+      </div>
+      <div class="tax-res-eff">Efektywne obciążenie: ${result.effRate.toFixed(1).replace('.', ',')}% przychodu</div>
+    `;
+  }
+
+  function doCalc() {
+    const revenue  = parseFloat(document.getElementById('tc-revenue')?.value) || 0;
+    const costs    = parseFloat(document.getElementById('tc-costs')?.value) || 0;
+    const form     = document.getElementById('tc-form')?.value || 'skala';
+    const type     = document.getElementById('tc-type')?.value || 'jdg';
+    const prefZUS  = document.getElementById('tc-zus-preferencyjny')?.checked || false;
+
+    const result = calcTax(revenue, costs, form, type, prefZUS);
+    renderResults(result);
+  }
+
+  // Hide costs field for ryczałt (doesn't affect tax base)
+  function toggleCostsVisibility() {
+    const form      = document.getElementById('tc-form')?.value || '';
+    const costsField = document.getElementById('tc-costs')?.closest('.tax-field');
+    const type = document.getElementById('tc-type')?.value || 'jdg';
+    if (costsField) {
+      const isRyczalt = form.startsWith('ryczalt') && type === 'jdg';
+      costsField.style.opacity = isRyczalt ? '.45' : '1';
+      const info = costsField.querySelector('.ryczalt-note');
+      if (isRyczalt && !info) {
+        const note = document.createElement('span');
+        note.className = 'ryczalt-note';
+        note.style.cssText = 'font-size:.68rem;color:var(--text3);font-family:JetBrains Mono,monospace;';
+        note.textContent = '(przy ryczałcie koszty nie zmniejszają podstawy)';
+        costsField.appendChild(note);
+      } else if (!isRyczalt && info) {
+        info.remove();
+      }
+    }
+  }
+
+  window.addEventListener('DOMContentLoaded', () => {
+    const btn    = document.getElementById('tc-calculate');
+    const inputs = document.querySelectorAll('#tax-calculator-panel input, #tax-calculator-panel select');
+
+    btn?.addEventListener('click', doCalc);
+
+    // Real-time: recalc when user changes any field (after first manual calc)
+    let hasCalculated = false;
+    btn?.addEventListener('click', () => { hasCalculated = true; });
+    inputs.forEach(inp => {
+      inp.addEventListener('input', () => { if (hasCalculated) doCalc(); toggleCostsVisibility(); });
+      inp.addEventListener('change', () => { if (hasCalculated) doCalc(); toggleCostsVisibility(); });
+    });
+
+    // Allow Enter key to trigger calc
+    inputs.forEach(inp => {
+      inp.addEventListener('keydown', e => { if (e.key === 'Enter') { doCalc(); hasCalculated = true; } });
+    });
+  });
+})();
+
+/* -----------------------------------------------
+   INVESTMENTS DATA & RENDER
+   ----------------------------------------------- */
+const INVESTMENTS = [
+  // Drogi
+  { id:1,  cat:'drogi',          icon:'🛣️',  name:'Przebudowa ul. Nowogrodzkiej',           desc:'Kompleksowa modernizacja nawierzchni, chodników i oświetlenia na odcinku 1,2 km. Poprawa bezpieczeństwa pieszych.', value:'4,8 mln zł', year:'2025',    status:'realizacja', funding:'Środki własne + RFRD' },
+  { id:2,  cat:'drogi',          icon:'🛣️',  name:'Remont ul. Poligonowej i Kaziańskiej',   desc:'Wymiana nawierzchni asfaltowej i przebudowa skrzyżowań, budowa chodnika jednostronnego.', value:'2,1 mln zł', year:'2025',    status:'realizacja', funding:'Środki własne' },
+  { id:3,  cat:'drogi',          icon:'🛣️',  name:'Droga ekspresowa S61 — obwodnica',       desc:'Realizacja odcinka obwodnicy w ramach drogi Via Baltica. Inwestycja rządowa kluczowa dla Łomży.', value:'~180 mln zł', year:'2024',   status:'ukonczone', funding:'GDDKiA / KFD' },
+  { id:4,  cat:'drogi',          icon:'🛣️',  name:'Ścieżki rowerowe — etap III',            desc:'Budowa 3,4 km nowych ścieżek rowerowych łączących osiedla z centrum. Część systemu Łomżyńskiego VeloŁomża.', value:'1,9 mln zł', year:'2025',   status:'planowane', funding:'UE — RPOWP' },
+  // Sport & Rekreacja
+  { id:5,  cat:'sport',          icon:'⚽',  name:'Hala sportowa przy SP nr 5',              desc:'Budowa pełnowymiarowej hali sportowej z trybunami na 200 miejsc. Zaplecze szatniowe i siłownia.', value:'12,4 mln zł', year:'2025-26', status:'realizacja', funding:'Środki własne + MEiS' },
+  { id:6,  cat:'sport',          icon:'🏊',  name:'Modernizacja basenu miejskiego',           desc:'Remont infrastruktury basenu krytego: wymiana instalacji, odnowienie niecek, nowe zaplecze.', value:'3,2 mln zł', year:'2024',    status:'ukonczone', funding:'Środki własne' },
+  { id:7,  cat:'sport',          icon:'🌳',  name:'Park linearny nad Łomżyczką',             desc:'Rewitalizacja terenów zielonych wzdłuż rzeki Łomżyczki. Siłownia plenerowa, alejki, oświetlenie LED.', value:'2,6 mln zł', year:'2025',    status:'realizacja', funding:'UE — POIiŚ' },
+  { id:8,  cat:'sport',          icon:'⛹️', name:'Boiska wielofunkcyjne — 4 lokalizacje',   desc:'Budowa 4 boisk wielofunkcyjnych (piłka nożna, koszykówka, siatkówka) na osiedlach miejskich.', value:'1,4 mln zł', year:'2025',    status:'planowane', funding:'Fundusz Sportowy' },
+  // Edukacja
+  { id:9,  cat:'edukacja',       icon:'🏫',  name:'Termomodernizacja SP nr 2 i SP nr 9',     desc:'Kompleksowe ocieplenie budynków, wymiana okien i drzwi, modernizacja systemu grzewczego.', value:'5,7 mln zł', year:'2025',    status:'realizacja', funding:'UE — RPOWP + środki własne' },
+  { id:10, cat:'edukacja',       icon:'💻',  name:'Pracownie cyfrowe w 6 szkołach',          desc:'Wyposażenie pracowni komputerowych w nowy sprzęt, tablice interaktywne i serwery. Program KPO.', value:'1,8 mln zł', year:'2024',    status:'ukonczone', funding:'KPO' },
+  { id:11, cat:'edukacja',       icon:'🏫',  name:'Rozbudowa Przedszkola nr 12',             desc:'Dobudowa skrzydła zwiększającego pojemność o 75 miejsc. Nowy plac zabaw i sala gimnastyczna.', value:'4,1 mln zł', year:'2026',    status:'planowane', funding:'Środki własne + MEiN' },
+  // Środowisko
+  { id:12, cat:'srodowisko',     icon:'♻️',  name:'PSZOK — Punkt Selektywnej Zbiórki',      desc:'Modernizacja i rozbudowa punktu selektywnej zbiórki odpadów komunalnych. Nowe kontenery i system wagowy.', value:'1,2 mln zł', year:'2024',   status:'ukonczone', funding:'WFOŚiGW' },
+  { id:13, cat:'srodowisko',     icon:'💧',  name:'Modernizacja sieci wodociągowej — etap V',desc:'Wymiana 4,5 km przestarzałych rur azbestowo-cementowych. Redukcja strat wody w sieci.', value:'3,4 mln zł', year:'2025',    status:'realizacja', funding:'Środki własne MPWiK' },
+  { id:14, cat:'srodowisko',     icon:'🌿',  name:'Nowe nasadzenia i tereny zielone',        desc:'Posadzenie 800 drzew i 2 400 krzewów w pasach drogowych i parkach. Budżet obywatelski.', value:'0,6 mln zł', year:'2025',    status:'planowane', funding:'Środki własne' },
+  { id:15, cat:'srodowisko',     icon:'☀️',  name:'Fotowoltaika na obiektach gminnych',      desc:'Instalacja paneli PV na 8 budynkach użyteczności publicznej (szkoły, UM). Łączna moc 380 kWp.', value:'2,9 mln zł', year:'2025-26', status:'realizacja', funding:'UE — RPOWP' },
+  // Kultura
+  { id:16, cat:'kultura',        icon:'🎭',  name:'Remont Teatru Lalki i Aktora',            desc:'Modernizacja widowni, sceny i zaplecza technicznego. Poprawa warunków akustycznych i dostępności.', value:'6,2 mln zł', year:'2025-26', status:'planowane', funding:'MKiDN + środki własne' },
+  { id:17, cat:'kultura',        icon:'📚',  name:'Nowa filia MBP na Śródmieściu',           desc:'Budowa nowoczesnej filii biblioteki z coworkingiem, salą warsztatową i strefą dla dzieci.', value:'3,8 mln zł', year:'2026',    status:'planowane', funding:'Środki własne + Program Biblioteki Narodowej' },
+  { id:18, cat:'kultura',        icon:'🏛️',  name:'Rewitalizacja Starego Rynku',             desc:'Odbudowa historycznego bruku, nowe oświetlenie dekoracyjne, fontanna multimedialna, mała architektura.', value:'5,1 mln zł', year:'2024',   status:'ukonczone', funding:'UE — RPOWP' },
+  // Infrastruktura
+  { id:19, cat:'infrastruktura', icon:'💡',  name:'Modernizacja oświetlenia — LED',          desc:'Wymiana 1 850 opraw na energooszczędne LED w całym mieście. Oszczędność ok. 42% energii.', value:'3,1 mln zł', year:'2024',    status:'ukonczone', funding:'Środki własne + EOG' },
+  { id:20, cat:'infrastruktura', icon:'🔧',  name:'Cyfryzacja zarządzania ruchem',           desc:'System inteligentnego sterowania sygnalizacją świetlną. Adaptacyjne cykle, priorytety dla transportu publicznego.', value:'2,3 mln zł', year:'2025',   status:'realizacja', funding:'UE — CEF' },
+  { id:21, cat:'infrastruktura', icon:'🏗️',  name:'Budowa parkingu wielopoziomowego P+R',   desc:'Parking Park & Ride przy dworcu PKS — 280 miejsc + 40 dla rowerów. Ładowarki EV.', value:'8,7 mln zł', year:'2025-26', status:'planowane', funding:'Środki własne + KFD' },
+  { id:22, cat:'infrastruktura', icon:'📡',  name:'Rozbudowa sieci monitoringu CCTV',        desc:'Dodatkowe 64 kamery w centrum i osiedlach. Integracja z Centrum Zarządzania Kryzysowego.', value:'0,8 mln zł', year:'2025',    status:'realizacja', funding:'Środki własne' },
+  { id:23, cat:'infrastruktura', icon:'🚌',  name:'Nowe autobusy elektryczne MZK',           desc:'Zakup 6 elektrycznych autobusów niskopodłogowych. Wymiana najstarszego taboru MZK Łomża.', value:'7,2 mln zł', year:'2025',    status:'planowane', funding:'NFOŚiGW — Zielony Transport' },
+  { id:24, cat:'edukacja',       icon:'🏫',  name:'Adaptacja pomieszczeń dla uczniów ze SPE',desc:'Dostosowanie 12 szkół do potrzeb uczniów ze specjalnymi potrzebami edukacyjnymi. Windy, podjazdy, toalety.', value:'1,5 mln zł', year:'2025',   status:'realizacja', funding:'UE — RPOWP' },
+];
+
+function statusClass(s) {
+  if (s === 'realizacja') return 'realizacja';
+  if (s === 'ukonczone')  return 'ukonczone';
+  return 'planowane';
+}
+function statusLabel(s) {
+  if (s === 'realizacja') return '⚙ W realizacji';
+  if (s === 'ukonczone')  return '✓ Ukończone';
+  return '📋 Planowane';
+}
+
+function renderInvestGrid(filter) {
+  const grid = document.getElementById('invest-grid');
+  if (!grid) return;
+  const items = filter === 'all' ? INVESTMENTS : INVESTMENTS.filter(i => i.cat === filter);
+  grid.innerHTML = items.map(inv => `
+    <div class="invest-card status-${inv.status}" data-cat="${inv.cat}">
+      <div class="invest-card-top">
+        <span class="invest-cat">${inv.icon}</span>
+        <span class="invest-status ${statusClass(inv.status)}">${statusLabel(inv.status)}</span>
+      </div>
+      <div class="invest-name">${inv.name}</div>
+      <div class="invest-desc">${inv.desc}</div>
+      <div class="invest-footer">
+        <span class="invest-value">${inv.value}</span>
+        <span class="invest-year">${inv.year}</span>
+      </div>
+      <div class="invest-funding">${inv.funding}</div>
+    </div>
+  `).join('');
+
+  // Animate new cards
+  grid.querySelectorAll('.invest-card').forEach((el, i) => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(8px)';
+    setTimeout(() => {
+      el.style.transition = 'opacity .25s ease, transform .25s ease';
+      el.style.opacity = '1';
+      el.style.transform = 'translateY(0)';
+    }, i * 35);
+  });
+}
+
+function renderInvestTimeline() {
+  const el = document.getElementById('invest-timeline');
+  if (!el) return;
+
+  const byYear = {};
+  INVESTMENTS.forEach(inv => {
+    const y = inv.year.split('-')[0];
+    if (!byYear[y]) byYear[y] = [];
+    byYear[y].push(inv);
+  });
+
+  const totals = { '2024': '18,3 mln zł', '2025': '50,9 mln zł', '2026': '~24 mln zł (plan)' };
+
+  el.innerHTML = Object.keys(byYear).sort().map(yr => {
+    const chips = byYear[yr].map(inv => {
+      const cls = inv.status === 'ukonczone' ? 'done' : inv.funding.includes('UE') ? 'ue' : '';
+      return `<span class="invest-tl-chip ${cls}" title="${inv.value} — ${inv.funding}">${inv.icon} ${inv.name}</span>`;
+    }).join('');
+    return `
+      <div class="invest-tl-year">
+        <div class="invest-tl-label">${yr}</div>
+        <div class="invest-tl-items">${chips}</div>
+        <div class="invest-tl-total">${totals[yr] || ''}</div>
+      </div>`;
+  }).join('');
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+  renderInvestGrid('all');
+  renderInvestTimeline();
+
+  document.querySelectorAll('.invest-filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.invest-filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderInvestGrid(btn.dataset.filter);
+    });
+  });
+});
+
+/* -----------------------------------------------
+   POPULATION TREND CHART
+   Dane historyczne GUS 2002–2024 + prognoza 2025–2050
+   ----------------------------------------------- */
+(function () {
+
+  // Dane historyczne: rok → liczba mieszkańców (GUS, BDL)
+  const HIST = [
+    [2002, 63890], [2003, 63500], [2004, 63200], [2005, 63050],
+    [2006, 62900], [2007, 62700], [2008, 62450], [2009, 62200],
+    [2010, 62050], [2011, 61950], [2012, 62000], [2013, 62100],
+    [2014, 62050], [2015, 61800], [2016, 61400], [2017, 63800],
+    [2018, 63300], [2019, 62800], [2020, 62200], [2021, 61500],
+    [2022, 60800], [2023, 60100], [2024, 59476],
+  ];
+
+  // Prognoza GUS (trend liniowy ~−213/rok od 2025, spowolnienie do 2050)
+  const PROJ = [];
+  const projStart = 59263;
+  const projYears = [2025,2026,2027,2028,2029,2030,2031,2032,2033,2034,
+                     2035,2036,2037,2038,2039,2040,2041,2042,2043,2044,
+                     2045,2046,2047,2048,2049,2050];
+  const projVals  = [59263,59000,58740,58480,58180,57850,57500,57100,56700,56250,
+                     55780,55300,54800,54270,53720,53150,52560,51950,51320,50680,
+                     50020,49350,48670,47980,47280,46082];
+  projYears.forEach((yr, i) => PROJ.push([yr, projVals[i]]));
+
+  // Punkt graniczny — gdzie historia przechodzi w prognozę
+  const BOUNDARY_YEAR = 2025;
+
+  // Kluczowe adnotacje
+  const ANNOTATIONS = [
+    { year: 2002, val: 63890, label: 'Szczyt populacji',     color: 'var(--green)' },
+    { year: 2017, val: 63800, label: 'Korekta spisu GUS',    color: 'var(--blue)' },
+    { year: 2025, val: 59263, label: 'Dziś (szac.)',         color: 'var(--amber)' },
+    { year: 2030, val: 57850, label: 'Prognoza 2030',        color: 'var(--text3)' },
+    { year: 2050, val: 46082, label: 'Prognoza 2050',        color: 'var(--red)' },
+  ];
+
+  let currentView = 'all'; // 'all' | 'hist' | 'proj'
+
+  function getViewData() {
+    if (currentView === 'hist') return { points: HIST, showBoundary: false };
+    if (currentView === 'proj') return { points: PROJ, showBoundary: false };
+    return { points: [...HIST, ...PROJ.slice(1)], showBoundary: true };
+  }
+
+  function renderPopChart() {
+    const el = document.getElementById('pop-trend-chart');
+    if (!el) return;
+    el.innerHTML = '';
+
+    const { points, showBoundary } = getViewData();
+    const years  = points.map(p => p[0]);
+    const values = points.map(p => p[1]);
+
+    const W   = Math.max(680, years.length * 22);
+    const H   = 200;
+    const pad = { top: 18, right: 20, bottom: 28, left: 46 };
+
+    const minV = Math.min(...values) * 0.97;
+    const maxV = Math.max(...values) * 1.005;
+
+    const xScale = (i) => pad.left + (i / (points.length - 1)) * (W - pad.left - pad.right);
+    const yScale = (v) => pad.top + ((maxV - v) / (maxV - minV)) * (H - pad.top - pad.bottom);
+
+    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+    svg.setAttribute('preserveAspectRatio', 'xMidYMid meet');
+    svg.style.cssText = 'width:100%;height:100%;display:block;overflow:visible;';
+
+    // ── Grid lines ──────────────────────────────────────────────────
+    const gridVals = [46000, 50000, 54000, 58000, 62000];
+    gridVals.forEach(gv => {
+      if (gv < minV || gv > maxV) return;
+      const gy = yScale(gv);
+      const gl = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+      gl.setAttribute('x1', pad.left); gl.setAttribute('y1', gy);
+      gl.setAttribute('x2', W - pad.right); gl.setAttribute('y2', gy);
+      gl.setAttribute('stroke', 'var(--border)'); gl.setAttribute('stroke-dasharray', '2 3');
+      gl.setAttribute('stroke-width', '1');
+      svg.appendChild(gl);
+
+      const lbl = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+      lbl.setAttribute('x', pad.left - 4); lbl.setAttribute('y', gy + 3.5);
+      lbl.setAttribute('text-anchor', 'end'); lbl.setAttribute('fill', 'var(--text3)');
+      lbl.setAttribute('font-size', '7.5'); lbl.setAttribute('font-family', 'JetBrains Mono,monospace');
+      lbl.textContent = (gv / 1000).toFixed(0) + 'k';
+      svg.appendChild(lbl);
+    });
+
+    // ── Vertical boundary line (historia / prognoza) ─────────────
+    if (showBoundary) {
+      const bIdx = points.findIndex(p => p[0] >= BOUNDARY_YEAR);
+      if (bIdx >= 0) {
+        const bx = xScale(bIdx);
+        const vl = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+        vl.setAttribute('x1', bx); vl.setAttribute('y1', pad.top);
+        vl.setAttribute('x2', bx); vl.setAttribute('y2', H - pad.bottom);
+        vl.setAttribute('stroke', 'var(--border2)'); vl.setAttribute('stroke-dasharray', '4 3');
+        vl.setAttribute('stroke-width', '1.2');
+        svg.appendChild(vl);
+
+        // Label "PROGNOZA →"
+        const tl = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+        tl.setAttribute('x', bx + 5); tl.setAttribute('y', pad.top + 10);
+        tl.setAttribute('fill', 'var(--amber)'); tl.setAttribute('font-size', '7');
+        tl.setAttribute('font-family', 'JetBrains Mono,monospace');
+        tl.setAttribute('letter-spacing', '.08em');
+        tl.textContent = 'PROGNOZA →';
+        svg.appendChild(tl);
+      }
+    }
+
+    // ── Area fill ────────────────────────────────────────────────
+    // Historical area (blue)
+    const histPoints = currentView === 'proj' ? [] :
+      HIST.filter(p => p[0] >= years[0] && p[0] <= years[years.length - 1]);
+
+    if (histPoints.length > 1) {
+      const hi = histPoints.map((p, i) => {
+        const idx = points.findIndex(pt => pt[0] === p[0]);
+        return `${xScale(idx)},${yScale(p[1])}`;
+      });
+      const hx0 = xScale(points.findIndex(pt => pt[0] === histPoints[0][0]));
+      const hxN = xScale(points.findIndex(pt => pt[0] === histPoints[histPoints.length - 1][0]));
+      const areaH = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
+      areaH.setAttribute('points',
+        `${hx0},${H - pad.bottom} ${hi.join(' ')} ${hxN},${H - pad.bottom}`);
+      areaH.setAttribute('fill', 'rgba(121,183,255,.10)');
+      svg.appendChild(areaH);
+    }
+
+    // Projection area (amber)
+    const projPoints = currentView === 'hist' ? [] :
+      PROJ.filter(p => p[0] >= years[0] && p[0] <= years[years.length - 1]);
+
+    if (projPoints.length > 1) {
+      const pi = projPoints.map(p => {
+        const idx = points.findIndex(pt => pt[0] === p[0]);
+        return `${xScale(idx)},${yScale(p[1])}`;
+      });
+      const px0 = xScale(points.findIndex(pt => pt[0] === projPoints[0][0]));
+      const pxN = xScale(points.findIndex(pt => pt[0] === projPoints[projPoints.length - 1][0]));
+      const areaP = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
+      areaP.setAttribute('points',
+        `${px0},${H - pad.bottom} ${pi.join(' ')} ${pxN},${H - pad.bottom}`);
+      areaP.setAttribute('fill', 'rgba(240,190,99,.08)');
+      svg.appendChild(areaP);
+    }
+
+    // ── Lines ────────────────────────────────────────────────────
+    function drawSegment(segPoints, color, dash) {
+      if (segPoints.length < 2) return;
+      const coords = segPoints.map((p, i) => {
+        const fullIdx = points.findIndex(pt => pt[0] === p[0]);
+        return `${xScale(fullIdx)},${yScale(p[1])}`;
+      }).join(' ');
+      const line = document.createElementNS('http://www.w3.org/2000/svg', 'polyline');
+      line.setAttribute('points', coords);
+      line.setAttribute('fill', 'none');
+      line.setAttribute('stroke', color);
+      line.setAttribute('stroke-width', '2');
+      if (dash) line.setAttribute('stroke-dasharray', dash);
+      line.style.animation = 'grow 1.4s ease-out both';
+      svg.appendChild(line);
+    }
+
+    if (currentView === 'all') {
+      drawSegment(HIST, 'var(--blue)', null);
+      drawSegment(PROJ, 'var(--amber)', '5 3');
+    } else if (currentView === 'hist') {
+      drawSegment(HIST.filter(p => p[0] >= years[0]), 'var(--blue)', null);
+    } else {
+      drawSegment(PROJ, 'var(--amber)', '5 3');
+    }
+
+    // ── Dots for notable years ──────────────────────────────────
+    const notableYears = new Set([2002, 2010, 2017, 2024, 2025, 2030, 2040, 2050]);
+    points.forEach((p, i) => {
+      if (!notableYears.has(p[0])) return;
+      const isProj = p[0] > 2024;
+      const cx = xScale(i);
+      const cy = yScale(p[1]);
+      const dot = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+      dot.setAttribute('cx', cx); dot.setAttribute('cy', cy);
+      dot.setAttribute('r', p[0] === 2025 ? '4' : '3');
+      dot.setAttribute('fill', isProj ? 'var(--amber)' : 'var(--blue)');
+      dot.setAttribute('stroke', 'var(--bg)'); dot.setAttribute('stroke-width', '1.5');
+      const title = document.createElementNS('http://www.w3.org/2000/svg', 'title');
+      title.textContent = `${p[0]}: ${p[1].toLocaleString('pl-PL')} mieszkańców`;
+      dot.appendChild(title);
+      svg.appendChild(dot);
+
+      // Year label on X axis
+      const showLbl = [2002, 2010, 2017, 2024, 2025, 2030, 2040, 2050].includes(p[0]);
+      if (showLbl) {
+        const lbl = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+        lbl.setAttribute('x', cx); lbl.setAttribute('y', H - 6);
+        lbl.setAttribute('text-anchor', 'middle'); lbl.setAttribute('fill', 'var(--text3)');
+        lbl.setAttribute('font-size', '7.5'); lbl.setAttribute('font-family', 'JetBrains Mono,monospace');
+        lbl.textContent = String(p[0]);
+        svg.appendChild(lbl);
+      }
+    });
+
+    // ── "Dziś" callout ──────────────────────────────────────────
+    const todayIdx = points.findIndex(p => p[0] === 2025);
+    if (todayIdx >= 0) {
+      const tx = xScale(todayIdx);
+      const ty = yScale(points[todayIdx][1]);
+      const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+      rect.setAttribute('x', tx - 22); rect.setAttribute('y', ty - 22);
+      rect.setAttribute('width', 44); rect.setAttribute('height', 14);
+      rect.setAttribute('rx', '2'); rect.setAttribute('fill', 'var(--surf3)');
+      rect.setAttribute('stroke', 'var(--amber)'); rect.setAttribute('stroke-width', '.8');
+      svg.appendChild(rect);
+      const t = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+      t.setAttribute('x', tx); t.setAttribute('y', ty - 12);
+      t.setAttribute('text-anchor', 'middle'); t.setAttribute('fill', 'var(--amber)');
+      t.setAttribute('font-size', '7'); t.setAttribute('font-family', 'JetBrains Mono,monospace');
+      t.setAttribute('font-weight', '700');
+      t.textContent = 'DZIŚ';
+      svg.appendChild(t);
+    }
+
+    el.appendChild(svg);
+
+    // ── Annotation chips below chart ────────────────────────────
+    const annEl = document.getElementById('pop-annotations');
+    if (annEl) {
+      const visible = ANNOTATIONS.filter(a => years.includes(a.year));
+      annEl.innerHTML = visible.map(a => {
+        const base = a.year === 2024 ? HIST.find(p => p[0] === 2024)?.[1] :
+                     a.year === 2002 ? 63890 : null;
+        const delta = base && a.year !== 2002
+          ? ` (${((a.val - 63890) / 63890 * 100).toFixed(1).replace('.', ',')}% vs 2002)` : '';
+        return `<div class="pop-annotation">
+          <span class="pop-annotation-year">${a.year}</span>
+          <span class="pop-annotation-val" style="color:${a.color}">${a.val.toLocaleString('pl-PL')}</span>
+          <span class="pop-annotation-delta" style="color:${a.color}">${a.label}${delta}</span>
+        </div>`;
+      }).join('');
+    }
+  }
+
+  // Controls
+  window.addEventListener('DOMContentLoaded', () => {
+    renderPopChart();
+
+    const btnAll  = document.getElementById('pop-view-all');
+    const btnHist = document.getElementById('pop-view-hist');
+    const btnProj = document.getElementById('pop-view-proj');
+
+    function setView(view, activeBtn) {
+      currentView = view;
+      [btnAll, btnHist, btnProj].forEach(b => b?.classList.remove('active'));
+      activeBtn?.classList.add('active');
+      const titles = {
+        all:  'Liczba mieszkańców — historia i prognoza GUS (2002–2050)',
+        hist: 'Dane historyczne GUS (2002–2025)',
+        proj: 'Prognoza GUS (2025–2050)',
+      };
+      const h3 = document.querySelector('#pop-trend-panel h3');
+      if (h3) h3.textContent = titles[view];
+      renderPopChart();
+    }
+
+    btnAll?.addEventListener('click',  () => setView('all',  btnAll));
+    btnHist?.addEventListener('click', () => setView('hist', btnHist));
+    btnProj?.addEventListener('click', () => setView('proj', btnProj));
+  });
+})();

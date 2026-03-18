@@ -17,16 +17,8 @@
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@300;400;600&family=Manrope:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <link rel="stylesheet" href="style.css">
-     <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-KSEGNFP9WQ"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-KSEGNFP9WQ');
-</script>
 </head>
 <body>
 
@@ -41,6 +33,10 @@
     </div>
   </div>
   <div class="topbar-right">
+    <button id="share-btn" class="share-btn" title="Udostępnij stronę">
+      <i class="fa-solid fa-share-nodes"></i>
+      <span class="btn-text">Udostępnij</span>
+    </button>
     <button id="contrast-toggle" class="contrast-btn" title="Przełącz kontrast">◐</button>
     <div class="api-status">
       <div class="api-dot" id="api-dot"></div>
@@ -1223,7 +1219,3 @@
 
 </body>
 </html>
-
-
-
-

@@ -1,4 +1,4 @@
-﻿/* -----------------------------------------------
+﻿﻿/* -----------------------------------------------
    STATIC DATA — Łomża (GUS / BIP / 4lomza.pl)
    ----------------------------------------------- */
 const CITY = {
@@ -1180,6 +1180,29 @@ window.addEventListener('DOMContentLoaded', async () => {
       });
   }
 
+  // Share Button Logic (Web Share API)
+  const shareBtn = document.getElementById('share-btn');
+  if (shareBtn) {
+    shareBtn.addEventListener('click', async () => {
+      const shareData = {
+        title: 'Łomża — Miasto jako Firma',
+        text: 'Sprawdź dashboard finansowy miasta Łomża: budżet, dług, demografia i dane live!',
+        url: window.location.href
+      };
+      try {
+        if (navigator.share) {
+          await navigator.share(shareData);
+        } else {
+          // Fallback dla urządzeń desktopowych bez obsługi Share API
+          await navigator.clipboard.writeText(shareData.url);
+          alert('Link do strony został skopiowany do schowka!');
+        }
+      } catch (err) {
+        console.debug('Udostępnianie anulowane lub błąd:', err);
+      }
+    });
+  }
+
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('./sw.js').catch((err) => {
       console.warn('Rejestracja service workera nie powiodła się:', err.message);
@@ -1201,4 +1224,3 @@ window.addEventListener('DOMContentLoaded', async () => {
     });
   }, 100);
 });
-

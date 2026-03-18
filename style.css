@@ -135,6 +135,28 @@ body::after {
   color: var(--text);
 }
 
+.share-btn {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text2);
+  padding: 0.35rem 0.85rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.85rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: background .2s, color .2s, border-color .2s;
+}
+.share-btn:hover {
+  background: var(--surf2);
+  color: var(--text);
+  border-color: var(--amber);
+}
+
 .api-status {
   display: flex;
   align-items: center;
@@ -688,7 +710,16 @@ main { max-width: 1480px; margin: 0 auto; padding: 0 2rem 5rem; }
   }
 
   .g2,.g3,.g12,.g21,.src-grid { grid-template-columns:1fr; }
-  .topbar { padding:0 1rem; }
+  .topbar {
+    flex-direction: column;
+    height: auto;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+    position: relative;
+  }
+  .topbar-left, .topbar-right { width: 100%; justify-content: center; }
+  .topbar-left { text-align: center; }
+  .topbar-right { flex-wrap: wrap; }
   main { padding:0 1rem 4rem; }
   .vcard {
     flex-direction: column;
@@ -697,6 +728,7 @@ main { max-width: 1480px; margin: 0 auto; padding: 0 2rem 5rem; }
     padding: 1.5rem 1rem;
   }
   .vcard-arrow { font-size:3.5rem; }
+
   .kpi-grid,.kpi-grid-6 { grid-template-columns:1fr 1fr; }
 
   .comp-row {

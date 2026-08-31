@@ -1,11 +1,12 @@
 const CACHE_NAME = 'lomza-dashboard-v4';
 const ASSETS = [
   './',
-  './lomza-final.html',
+  './index.html',
   './style.css',
   './script.js',
   './manifest.webmanifest',
-  './favicon.svg'
+  './favicon.svg',
+  './sources.config.json'
 ];
 
 self.addEventListener('install', (event) => {

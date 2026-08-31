@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://lomza.pages.dev/sitemap.xml

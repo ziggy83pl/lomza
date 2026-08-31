@@ -1,22 +1,44 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pl">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Łomża — Miasto jako Firma | Dashboard Finansowy</title>
-<meta name="description" content="Dashboard finansowy miasta Łomża: budżet, demografia, rynek pracy, dług publiczny i dane live z BDL GUS.">
+<meta name="description" content="Dashboard finansowy miasta Łomża: budżet, demografia, rynek pracy, dług publiczny, podatki, inwestycje i dane live z BDL GUS.">
+<meta name="keywords" content="Łomża, miasto Łomża, budżet Łomża 2024 2025, finanse miejskie Łomża, podatki Łomża, kalkulator podatkowy Łomża, demografia Łomży, GUS Łomża, inwestycje Łomża, rynek pracy Łomża, województwo podlaskie, dashboard miejski">
+<meta name="author" content="Łomża — Miasto jako Firma">
+<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+
+<!-- Geo Meta Tags for Łomża, Poland -->
+<meta name="geo.region" content="PL-20">
+<meta name="geo.placename" content="Łomża">
+<meta name="geo.position" content="53.1781;22.0594">
+<meta name="ICBM" content="53.1781, 22.0594">
+<meta name="DC.title" content="Łomża — Miasto jako Firma | Dashboard Finansowy">
+<meta name="DC.coverage" content="Łomża, podlaskie, Polska">
+
+<!-- Open Graph & Social -->
 <meta property="og:type" content="website">
+<meta property="og:site_name" content="Łomża — Miasto jako Firma">
+<meta property="og:locale" content="pl_PL">
 <meta property="og:title" content="Łomża — Miasto jako Firma | Dashboard Finansowy">
-<meta property="og:description" content="Interaktywny dashboard danych miejskich Łomży: budżet, dług, demografia i wskaźniki gospodarcze.">
+<meta property="og:description" content="Interaktywny dashboard danych miejskich Łomży: budżet, dług, demografia, podatki, inwestycje i wskaźniki gospodarcze.">
 <meta property="og:url" content="https://lomza.pages.dev/">
 <meta property="og:image" content="https://lomza.pages.dev/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Łomża — Miasto jako Firma Dashboard Finansowy">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="theme-color" content="#080b12">
+<meta name="twitter:title" content="Łomża — Miasto jako Firma | Dashboard Finansowy">
+<meta name="twitter:description" content="Dashboard danych finansowych i gospodarczych miasta Łomża z danymi live GUS.">
+<meta name="twitter:image" content="https://lomza.pages.dev/og-image.png">
+<meta name="theme-color" content="#18202d">
 <link rel="canonical" href="https://lomza.pages.dev/">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@300;400;600&family=Manrope:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <link rel="stylesheet" href="style.css">
 
@@ -27,28 +49,75 @@
   "@graph": [
     {
       "@type": "WebSite",
+      "@id": "https://lomza.pages.dev/#website",
       "name": "Łomża — Miasto jako Firma",
       "url": "https://lomza.pages.dev/",
-      "description": "Interaktywny dashboard finansowy miasta Łomża: budżet, dług publiczny, demografia, gospodarka i dane live z BDL GUS.",
-      "inLanguage": "pl",
+      "description": "Interaktywny dashboard finansowy miasta Łomża: budżet, dług publiczny, demografia, podatki, inwestycje, gospodarka i dane live z BDL GUS.",
+      "inLanguage": "pl-PL",
       "publisher": {
         "@type": "Organization",
-        "name": "lomza.pages.dev"
+        "name": "Łomża — Miasto jako Firma",
+        "url": "https://lomza.pages.dev/"
+      }
+    },
+    {
+      "@type": "City",
+      "@id": "https://lomza.pages.dev/#city",
+      "name": "Łomża",
+      "alternateName": "Miasto Łomża",
+      "description": "Miasto na prawach powiatu w północno-wschodniej Polsce, w województwie podlaskim.",
+      "url": "https://lomza.pages.dev/",
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 53.1781,
+        "longitude": 22.0594
+      },
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Łomża",
+        "postalCode": "18-400",
+        "addressRegion": "województwo podlaskie",
+        "addressCountry": "PL"
       }
     },
     {
       "@type": "Dataset",
-      "name": "Dashboard Finansowy Łomży",
-      "description": "Dane budżetowe, demograficzne i gospodarcze miasta Łomża. Dochody, wydatki, dług publiczny, demografia i rynek pracy.",
+      "@id": "https://lomza.pages.dev/#dataset",
+      "name": "Dashboard Finansowo-Gospodarczy Miasta Łomża",
+      "description": "Zbiór danych finansowych, demograficznych, podatkowych i inwestycyjnych dla miasta Łomża na lata 2017-2025.",
       "url": "https://lomza.pages.dev/",
-      "keywords": ["Łomża", "budżet gminy", "finanse miejskie", "demografia", "rynek pracy", "dług publiczny"],
+      "keywords": [
+        "Łomża",
+        "budżet Łomży",
+        "finanse miejskie",
+        "demografia Łomża",
+        "rynek pracy Łomża",
+        "dług publiczny Łomża",
+        "inwestycje miejskie",
+        "podatki lokalne"
+      ],
       "license": "https://creativecommons.org/licenses/by/4.0/",
-      "creator": { "@type": "Organization", "name": "GUS — Bank Danych Lokalnych" },
+      "creator": {
+        "@type": "Organization",
+        "name": "GUS — Główny Urząd Statystyczny (Bank Danych Lokalnych)",
+        "url": "https://bdl.stat.gov.pl/"
+      },
       "temporalCoverage": "2017/2025",
       "spatialCoverage": {
         "@type": "Place",
         "name": "Łomża",
-        "address": { "@type": "PostalAddress", "addressCountry": "PL", "addressRegion": "Podlaskie" }
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": 53.1781,
+          "longitude": 22.0594
+        },
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Łomża",
+          "postalCode": "18-400",
+          "addressRegion": "Podlaskie",
+          "addressCountry": "PL"
+        }
       }
     }
   ]
@@ -156,7 +225,7 @@
       <div class="vcard-arrow">↑</div>
       <div class="vcard-body">
         <h2>Dochody rosną</h2>
-        <div class="vcard-val" style="color:var(--green)" data-value="639.6" data-suffix=" mln zł">0</div>
+        <div class="vcard-val" style="color:var(--green)" data-value="639.6" data-suffix=" mln zł">639,6 mln zł</div>
         <div class="vcard-label">Dochody budżetu 2025</div>
         <div class="vcard-delta">▲ +17,9% vs 2024</div>
         <div class="vcard-note">
@@ -168,7 +237,7 @@
       <div class="vcard-arrow">↓</div>
       <div class="vcard-body">
         <h2>Wydatki wyższe niż dochody</h2>
-        <div class="vcard-val" style="color:var(--red)" data-value="651.1" data-suffix=" mln zł">0</div>
+        <div class="vcard-val" style="color:var(--red)" data-value="651.1" data-suffix=" mln zł">651,1 mln zł</div>
         <div class="vcard-label">Wydatki budżetu 2025</div>
         <div class="vcard-delta">Deficyt: −11,5 mln zł</div>
         <div class="vcard-note">
@@ -190,25 +259,25 @@
   <div class="kpi-grid mb">
     <div class="kpi" data-tooltip="Całkowite dochody budżetu miasta w danym roku.">
       <div class="kpi-top"><div class="kpi-icon">💰</div><div class="badge up">▲+17,9%</div></div>
-      <div class="kpi-val" data-value="639.6" data-suffix="M">0</div>
+      <div class="kpi-val" data-value="639.6" data-suffix="M">639,6M</div>
       <div class="kpi-name">Dochody gminy</div>
       <div class="kpi-sub">vs 2024: 542,3 mln zł</div>
     </div>
     <div class="kpi" data-tooltip="Całkowite wydatki budżetu miasta w danym roku.">
       <div class="kpi-top"><div class="kpi-icon">📤</div><div class="badge dn">▲+14,7%</div></div>
-      <div class="kpi-val" data-value="651.1" data-suffix="M">0</div>
+      <div class="kpi-val" data-value="651.1" data-suffix="M">651,1M</div>
       <div class="kpi-name">Wydatki gminy</div>
       <div class="kpi-sub">vs 2024: 567,5 mln zł</div>
     </div>
     <div class="kpi" data-tooltip="Różnica między wydatkami a dochodami. Wartość ujemna oznacza deficyt.">
       <div class="kpi-top"><div class="kpi-icon">🏦</div><div class="badge dn">−11,5M</div></div>
-      <div class="kpi-val" style="color:var(--red)" data-value="-11.5" data-suffix="M">0</div>
+      <div class="kpi-val" style="color:var(--red)" data-value="-11.5" data-suffix="M">−11,5M</div>
       <div class="kpi-name">Deficyt budżetowy</div>
       <div class="kpi-sub">1,8% dochodów (2025)</div>
     </div>
     <div class="kpi" data-tooltip="Łączne zobowiązania finansowe miasta (kredyty, pożyczki, obligacje).">
       <div class="kpi-top"><div class="kpi-icon">⚠️</div><div class="badge dn">33,4%</div></div>
-      <div class="kpi-val sm" style="color:var(--amber)" data-value="213.6" data-suffix="M">0</div>
+      <div class="kpi-val sm" style="color:var(--amber)" data-value="213.6" data-suffix="M">213,6M</div>
       <div class="kpi-name">Dług publiczny</div>
       <div class="kpi-sub">33,4% dochodów (limit 60%)</div>
     </div>
@@ -217,37 +286,37 @@
   <div class="kpi-grid kpi-grid-6 mb">
     <div class="kpi" data-tooltip="Oficjalna liczba mieszkańców zarejestrowanych w mieście.">
       <div class="kpi-top"><div class="kpi-icon">👥</div><div class="badge dn">▼−1,1%</div></div>
-      <div class="kpi-val sm" data-value="59263">0</div>
+      <div class="kpi-val sm" data-value="59263">59 263</div>
       <div class="kpi-name">Mieszkańców</div>
       <div class="kpi-sub">prognoza 2050: 46 082</div>
     </div>
     <div class="kpi" data-tooltip="Różnica między liczbą osób, które zameldowały się w mieście, a liczbą osób, które się wymeldowały.">
       <div class="kpi-top"><div class="kpi-icon">📉</div><div class="badge dn">−108</div></div>
-      <div class="kpi-val sm" style="color:var(--red)" data-value="-108">0</div>
+      <div class="kpi-val sm" style="color:var(--red)" data-value="-108">−108</div>
       <div class="kpi-name">Saldo migracji</div>
       <div class="kpi-sub">wew: −123, zagr: +15 (szac. 2025)</div>
     </div>
     <div class="kpi" data-tooltip="Stopa bezrobocia rejestrowanego dla miasta Łomża.">
       <div class="kpi-top"><div class="kpi-icon">💼</div><div class="badge dn">6,7%</div></div>
-      <div class="kpi-val sm" style="color:var(--amber)" data-value="6.7" data-suffix="%">0</div>
+      <div class="kpi-val sm" style="color:var(--amber)" data-value="6.7" data-suffix="%">6,7%</div>
       <div class="kpi-name">Bezrobocie rej.</div>
       <div class="kpi-sub">GUS miesięczne: szac. 2025</div>
     </div>
     <div class="kpi" data-tooltip="Przeciętne miesięczne wynagrodzenie brutto w sektorze przedsiębiorstw.">
       <div class="kpi-top"><div class="kpi-icon">💵</div><div class="badge am">szac. 2025</div></div>
-      <div class="kpi-val sm" data-value="8520">0</div>
+      <div class="kpi-val sm" data-value="8520">8 520</div>
       <div class="kpi-name">Śr. wynagrodzenie PLN</div>
       <div class="kpi-sub">PL: 8 935–9 583 (szac. 2025)</div>
     </div>
     <div class="kpi" data-tooltip="Liczba nowo wybudowanych mieszkań w przeliczeniu na 1000 mieszkańców. Wskaźnik rozwoju budownictwa.">
       <div class="kpi-top"><div class="kpi-icon">🏗️</div><div class="badge up">510 lok.</div></div>
-      <div class="kpi-val sm" data-value="8.57">0</div>
+      <div class="kpi-val sm" data-value="8.57">8,57</div>
       <div class="kpi-name">Nowe mieszk./1000 os.</div>
       <div class="kpi-sub">PL avg: 5,33 (▲161%)</div>
     </div>
     <div class="kpi" data-tooltip="Liczba aktywnych podmiotów gospodarczych zarejestrowanych w rejestrze REGON.">
       <div class="kpi-top"><div class="kpi-icon">🏢</div><div class="badge up">+438</div></div>
-      <div class="kpi-val sm" data-value="6853">0</div>
+      <div class="kpi-val sm" data-value="6853">6 853</div>
       <div class="kpi-name">Firm w REGON</div>
       <div class="kpi-sub">wyrejestrowani: −343</div>
     </div>
@@ -294,22 +363,22 @@
   <div class="panel mb" id="citizen-impact-panel">
     <div class="kpi-grid">
       <div class="kpi">
-        <div class="kpi-val sm" id="citizen-debt-per-person">0</div>
+        <div class="kpi-val sm" id="citizen-debt-per-person">3 604 zł</div>
         <div class="kpi-name">Dług na mieszkańca</div>
         <div class="kpi-sub">Łączny dług / liczba mieszkańców</div>
       </div>
       <div class="kpi">
-        <div class="kpi-val sm" id="citizen-deficit-per-person">0</div>
+        <div class="kpi-val sm" id="citizen-deficit-per-person">194 zł</div>
         <div class="kpi-name">Deficyt na mieszkańca</div>
         <div class="kpi-sub">Roczny deficyt / liczba mieszkańców</div>
       </div>
       <div class="kpi">
-        <div class="kpi-val sm" id="citizen-edu-per-student">0</div>
+        <div class="kpi-val sm" id="citizen-edu-per-student">25 736 zł</div>
         <div class="kpi-name">Koszt oświaty na ucznia</div>
         <div class="kpi-sub">Wydatki oświatowe / ~11 tys. uczniów</div>
       </div>
       <div class="kpi">
-        <div class="kpi-val sm" id="citizen-income-per-person">0</div>
+        <div class="kpi-val sm" id="citizen-income-per-person">10 792 zł</div>
         <div class="kpi-name">Dochody na mieszkańca</div>
         <div class="kpi-sub">Dochody miasta / liczba mieszkańców</div>
       </div>

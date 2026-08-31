@@ -1,16 +1,20 @@
 {
-  "name": "Lomza Dashboard Finansowy",
-  "short_name": "LomzaDash",
-  "start_url": "/",
+  "name": "Łomża — Miasto jako Firma | Dashboard Finansowy",
+  "short_name": "Łomża Dash",
+  "description": "Interaktywny dashboard finansowo-gospodarczy miasta Łomża z danymi live GUS BDL.",
+  "lang": "pl-PL",
+  "start_url": "./index.html",
+  "scope": "./",
   "display": "standalone",
-  "background_color": "#080b12",
-  "theme_color": "#080b12",
+  "orientation": "any",
+  "background_color": "#18202d",
+  "theme_color": "#18202d",
   "icons": [
     {
       "src": "favicon.svg",
       "sizes": "any",
       "type": "image/svg+xml",
-      "purpose": "any"
+      "purpose": "any maskable"
     }
   ]
 }

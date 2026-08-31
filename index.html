@@ -39,7 +39,7 @@
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <link rel="stylesheet" href="style.css">
 
@@ -533,7 +533,7 @@
           <path d="M 18 100 A 82 82 0 0 1 182 100" fill="none" stroke="url(#gGrad)" stroke-width="16" stroke-linecap="round"
             stroke-dasharray="257" stroke-dashoffset="152" style="animation:gaugeFill 2s ease both;"/>
           <circle cx="100" cy="100" r="7" fill="var(--amber)" filter="drop-shadow(0 0 6px #ffb800)"/>
-          <text x="100" y="70" text-anchor="middle" fill="#ffb800" font-family="Syne,sans-serif" font-weight="800" font-size="26">33,4%</text>
+          <text x="100" y="70" text-anchor="middle" fill="#ffb800" font-family="var(--font-sans),sans-serif" font-weight="800" font-size="26">33,4%</text>
           <text x="100" y="84" text-anchor="middle" fill="#4a5568" font-family="JetBrains Mono,monospace" font-size="8">z limitu 60%</text>
           <text x="18" y="115" fill="#4a5568" font-size="8" font-family="JetBrains Mono,monospace">0%</text>
           <text x="165" y="115" fill="#4a5568" font-size="8" font-family="JetBrains Mono,monospace">60%</text>
@@ -653,7 +653,7 @@
             <!-- Poprodukcyjny 25.1%: offset=339*(1-0.251)=253.8, rotate from 18+56.8%: 269° -->
             <circle cx="70" cy="70" r="54" fill="none" stroke="#ffb800" stroke-width="18"
               stroke-dasharray="339" stroke-dashoffset="254" transform="rotate(179 70 70)"/>
-            <text x="70" y="67" text-anchor="middle" fill="#dde4f0" font-family="Syne,sans-serif" font-weight="800" font-size="18">59 476</text>
+            <text x="70" y="67" text-anchor="middle" fill="#dde4f0" font-family="var(--font-sans),sans-serif" font-weight="800" font-size="18">59 476</text>
             <text x="70" y="79" text-anchor="middle" fill="#4a5568" font-family="JetBrains Mono,monospace" font-size="6.5">MIESZKAŃCÓW</text>
           </svg>
           <div class="donut-legend">
@@ -722,11 +722,11 @@
       <div class="panel">
         <div class="panel-title"><h3>Migracje 2025 (szacunek)</h3><span class="src">GUS szacunek 2025</span></div>
         <div style="display:flex;justify-content:space-around;padding:.5rem 0;text-align:center;border-bottom:1px solid var(--border);margin-bottom:.75rem">
-          <div><div style="font-family:'Syne',sans-serif;font-weight:800;font-size:1.8rem;color:var(--green)">+15</div><div style="font-size:.6rem;color:var(--text3)">SALDO ZAGR.</div></div>
+          <div><div style="font-family:var(--font-sans);font-weight:800;font-size:1.8rem;color:var(--green)">+15</div><div style="font-size:.6rem;color:var(--text3)">SALDO ZAGR.</div></div>
           <div style="font-size:1.5rem;color:var(--border2);display:flex;align-items:center">/</div>
-          <div><div style="font-family:'Syne',sans-serif;font-weight:800;font-size:1.8rem;color:var(--red)">−123</div><div style="font-size:.6rem;color:var(--text3)">SALDO WEW.</div></div>
+          <div><div style="font-family:var(--font-sans);font-weight:800;font-size:1.8rem;color:var(--red)">−123</div><div style="font-size:.6rem;color:var(--text3)">SALDO WEW.</div></div>
           <div style="font-size:1.5rem;color:var(--border2);display:flex;align-items:center">=</div>
-          <div><div style="font-family:'Syne',sans-serif;font-weight:800;font-size:1.8rem;color:var(--red)">−108</div><div style="font-size:.6rem;color:var(--text3)">SALDO ŁĄCZNE</div></div>
+          <div><div style="font-family:var(--font-sans);font-weight:800;font-size:1.8rem;color:var(--red)">−108</div><div style="font-size:.6rem;color:var(--text3)">SALDO ŁĄCZNE</div></div>
         </div>
         <div class="alert-box amber">ℹ Saldo zagraniczne: +15. Łączne saldo migracji: −108. Łomża traci ok. 210 os./rok (migracje + przyrost nat., szac. 2025).</div>
       </div>
@@ -849,8 +849,8 @@
     <div class="panel">
       <div class="panel-title"><h3>Dojazdy do pracy</h3><span class="src">GUS</span></div>
       <div style="display:flex;justify-content:space-around;padding:1rem 0;text-align:center;">
-        <div><div style="font-family:'Syne',sans-serif;font-weight:800;font-size:2.5rem;color:var(--green)">+1420</div><div style="font-size:.62rem;color:var(--text3)">PRZYJEŻDŻA DO PRACY</div></div>
-        <div><div style="font-family:'Syne',sans-serif;font-weight:800;font-size:2.5rem;color:var(--red)">−1355</div><div style="font-size:.62rem;color:var(--text3)">WYJEŻDŻA DO PRACY</div></div>
+        <div><div style="font-family:var(--font-sans);font-weight:800;font-size:2.5rem;color:var(--green)">+1420</div><div style="font-size:.62rem;color:var(--text3)">PRZYJEŻDŻA DO PRACY</div></div>
+        <div><div style="font-family:var(--font-sans);font-weight:800;font-size:2.5rem;color:var(--red)">−1355</div><div style="font-size:.62rem;color:var(--text3)">WYJEŻDŻA DO PRACY</div></div>
       </div>
       <div class="alert-box green">✓ Saldo dojazdów: +65 — Łomża jest centrum zatrudnienia dla okolicy.</div>
     </div>

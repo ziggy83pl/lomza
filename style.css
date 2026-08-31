@@ -3,6 +3,9 @@
    Aesthetic: Industrial-Financial Terminal, deep navy base
    ====================================================== */
 :root {
+  --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
   --bg:        #18202d;
   --surf1:     #222c3d;
   --surf2:     #2a3548;
@@ -41,7 +44,7 @@ html { scroll-behavior: smooth; }
 body {
   background: var(--bg);
   color: var(--text);
-  font-family: 'Manrope', sans-serif;
+  font-family: var(--font-sans);
   font-weight: 500;
   font-size: var(--fs-base);
   line-height: 1.55;
@@ -108,10 +111,10 @@ body::after {
 }
 
 .city-name {
-  font-family: 'Syne', sans-serif;
+  font-family: var(--font-sans);
   font-weight: 800;
-  font-size: 1.2rem;
-  letter-spacing: -.01em;
+  font-size: 1.3rem;
+  letter-spacing: normal;
   color: var(--amber);
   white-space: nowrap;
 }
@@ -365,18 +368,18 @@ main { max-width: 1480px; margin: 0 auto; padding: 0 0.85rem 4rem; width: 100%; 
 .vcard.neg .vcard-arrow { color: var(--red); }
 
 .vcard-body h2 {
-  font-family: 'Syne', sans-serif;
+  font-family: var(--font-sans);
   font-weight: 800;
   font-size: var(--fs-xxl);
-  letter-spacing: -.02em;
-  line-height: 1.1;
+  letter-spacing: -0.01em;
+  line-height: 1.15;
   margin-bottom: .5rem;
 }
 .vcard.pos h2 { color: var(--green); }
 .vcard.neg h2 { color: var(--red); }
 
 .vcard-val {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: var(--font-mono);
   font-size: var(--fs-xl);
   font-weight: 800;
   margin-bottom: .2rem;
@@ -391,7 +394,7 @@ main { max-width: 1480px; margin: 0 auto; padding: 0 0.85rem 4rem; width: 100%; 
 }
 .vcard-delta {
   display: inline-flex; align-items: center; gap: .3rem;
-  font-family: 'JetBrains Mono', monospace; font-size: var(--fs-sm);
+  font-family: var(--font-mono); font-size: var(--fs-sm);
   font-weight: 700;
   padding: .15rem .5rem; border-radius: 2px;
 }
@@ -424,7 +427,7 @@ main { max-width: 1480px; margin: 0 auto; padding: 0 0.85rem 4rem; width: 100%; 
 .kpi-top { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:.6rem; }
 .kpi-icon { font-size:1.1rem; }
 .badge {
-  font-family:'JetBrains Mono',monospace; font-size: var(--fs-xxs);
+  font-family: var(--font-mono); font-size: var(--fs-xxs);
   font-weight: 700;
   padding:.15rem .45rem; border-radius:2px; letter-spacing:.05em;
 }
@@ -434,9 +437,13 @@ main { max-width: 1480px; margin: 0 auto; padding: 0 0.85rem 4rem; width: 100%; 
 .badge.bl { background:var(--blue-bg); color:var(--blue); }
 
 .kpi-val {
-  font-family:'Syne',sans-serif; font-weight:800;
-  font-size: var(--fs-xxl); line-height:1; letter-spacing:-.02em;
-  color:var(--text); margin-bottom:.2rem;
+  font-family: var(--font-sans);
+  font-weight: 800;
+  font-size: var(--fs-xxl);
+  line-height: 1.1;
+  letter-spacing: normal;
+  color: var(--text);
+  margin-bottom: .2rem;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -450,7 +457,7 @@ main { max-width: 1480px; margin: 0 auto; padding: 0 0.85rem 4rem; width: 100%; 
   letter-spacing:.08em;
 }
 .kpi-sub {
-  font-family:'JetBrains Mono',monospace;
+  font-family: var(--font-mono);
   font-size: var(--fs-xs);
   color:var(--text3);
   font-weight: 600;
@@ -473,11 +480,15 @@ main { max-width: 1480px; margin: 0 auto; padding: 0 0.85rem 4rem; width: 100%; 
   gap: 0.5rem;
 }
 .panel-title h3 {
-  font-family:'Syne',sans-serif; font-weight:800;
-  font-size: var(--fs-md); color:var(--amber); letter-spacing:.02em;
+  font-family: var(--font-sans);
+  font-weight: 800;
+  font-size: var(--fs-md);
+  color: var(--amber);
+  letter-spacing: normal;
 }
 .panel-title .src {
-  font-family:'JetBrains Mono',monospace; font-size: var(--fs-xxs);
+  font-family: var(--font-mono);
+  font-size: var(--fs-xxs);
   font-weight: 600;
   color:var(--text3); letter-spacing:.1em;
 }
@@ -636,11 +647,15 @@ main { max-width: 1480px; margin: 0 auto; padding: 0 0.85rem 4rem; width: 100%; 
   text-align:center; padding:1.5rem 1rem;
 }
 .score-num {
-  font-family:'Syne',sans-serif; font-weight:800; font-size: var(--fs-display);
-  line-height:1; letter-spacing:-.03em;
+  font-family: var(--font-sans);
+  font-weight: 800;
+  font-size: var(--fs-display);
+  line-height: 1;
+  letter-spacing: -0.01em;
   background: linear-gradient(135deg, #ffb800, #ff6a00);
-  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
-  margin-bottom:.25rem;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: .25rem;
 }
 .score-label { font-size: var(--fs-sm); color:var(--text3); text-transform:uppercase; letter-spacing:.1em; }
 
@@ -1461,17 +1476,17 @@ body.high-contrast .bf-b { background: var(--blue); }
   color: var(--green);
 }
 .tax-res-takehome-val {
-  font-family: 'Syne', sans-serif;
+  font-family: var(--font-sans);
   font-size: 1.7rem;
   font-weight: 800;
   color: var(--green);
-  letter-spacing: -.02em;
+  letter-spacing: -0.01em;
 }
 
 .tax-res-eff {
   margin-top: .5rem;
   text-align: right;
-  font-family: 'JetBrains Mono', monospace;
+  font-family: var(--font-mono);
   font-size: .78rem;
   font-weight: 600;
   color: var(--text3);
@@ -1500,7 +1515,7 @@ body.high-contrast .bf-b { background: var(--blue); }
 }
 
 .invest-filter-label {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: var(--font-mono);
   font-size: .75rem;
   font-weight: 700;
   color: var(--text3);
@@ -1510,7 +1525,7 @@ body.high-contrast .bf-b { background: var(--blue); }
   white-space: nowrap;
 }
 .invest-filter-btn {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: var(--font-mono);
   font-size: .75rem;
   font-weight: 700;
   background: transparent;
@@ -1582,7 +1597,7 @@ body.high-contrast .bf-b { background: var(--blue); }
   line-height: 1;
 }
 .invest-status {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: var(--font-mono);
   font-size: .68rem;
   font-weight: 700;
   letter-spacing: .08em;
@@ -1596,11 +1611,12 @@ body.high-contrast .bf-b { background: var(--blue); }
 .invest-status.ukonczone  { background: var(--green-bg); color: var(--green); }
 
 .invest-name {
-  font-family: 'Syne', sans-serif;
-  font-weight: 800;
+  font-family: var(--font-sans);
+  font-weight: 700;
   font-size: 1.05rem;
   color: var(--text);
-  line-height: 1.3;
+  line-height: 1.35;
+  letter-spacing: normal;
 }
 .invest-desc {
   font-size: var(--fs-sm);
@@ -1618,13 +1634,13 @@ body.high-contrast .bf-b { background: var(--blue); }
   margin-top: .25rem;
 }
 .invest-value {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: var(--font-mono);
   font-size: var(--fs-sm);
   font-weight: 700;
   color: var(--amber);
 }
 .invest-year {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: var(--font-mono);
   font-size: var(--fs-xs);
   font-weight: 600;
   color: var(--text3);
@@ -1633,7 +1649,7 @@ body.high-contrast .bf-b { background: var(--blue); }
   font-size: var(--fs-xs);
   font-weight: 700;
   color: var(--blue);
-  font-family: 'JetBrains Mono', monospace;
+  font-family: var(--font-mono);
 }
 
 /* Hidden card */
@@ -1654,11 +1670,12 @@ body.high-contrast .bf-b { background: var(--blue); }
 }
 .invest-tl-year:last-child { border-bottom: none; }
 .invest-tl-label {
-  font-family: 'Syne', sans-serif;
+  font-family: var(--font-sans);
   font-weight: 800;
   font-size: 1.35rem;
   color: var(--amber);
   line-height: 1;
+  letter-spacing: normal;
 }
 @media (min-width: 640px) {
   .invest-tl-year {
@@ -1682,7 +1699,7 @@ body.high-contrast .bf-b { background: var(--blue); }
   align-content: flex-start;
 }
 .invest-tl-chip {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: var(--font-mono);
   font-size: .78rem;
   font-weight: 600;
   background: var(--surf2);
@@ -1697,7 +1714,7 @@ body.high-contrast .bf-b { background: var(--blue); }
 .invest-tl-chip.ue { border-color: rgba(121,183,255,.4); color: var(--blue); }
 .invest-tl-chip.done { border-color: rgba(57,211,159,.4); color: var(--green); }
 .invest-tl-total {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: var(--font-mono);
   font-size: .8rem;
   font-weight: 700;
   color: var(--text2);
@@ -1741,7 +1758,7 @@ body.high-contrast .bf-b { background: var(--blue); }
   min-width: 110px;
 }
 .pop-annotation-year {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: var(--font-mono);
   font-size: .7rem;
   font-weight: 700;
   color: var(--text3);
@@ -1749,14 +1766,14 @@ body.high-contrast .bf-b { background: var(--blue); }
   text-transform: uppercase;
 }
 .pop-annotation-val {
-  font-family: 'Syne', sans-serif;
+  font-family: var(--font-sans);
   font-weight: 800;
   font-size: 1.2rem;
-  letter-spacing: -.01em;
+  letter-spacing: normal;
   margin: .1rem 0;
 }
 .pop-annotation-delta {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: var(--font-mono);
   font-size: .72rem;
   font-weight: 700;
 }
